@@ -18,6 +18,7 @@ import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
     templateUrl: 'list.component.html',
+    styleUrls: ['items.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -29,7 +30,7 @@ export class ListComponent implements OnInit {
 
     items?: Item[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'name', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'description', 'uom', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

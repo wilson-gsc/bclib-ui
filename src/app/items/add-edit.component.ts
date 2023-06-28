@@ -11,10 +11,11 @@ import { first } from 'rxjs/operators';
 
 import { ItemService, AlertService } from '@app/_services';
 import { Status } from '@app/_models/status';
+import { UOM } from '@app/_models/uom';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['add-edit.component.css'],
+    styleUrls: ['items.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
@@ -44,6 +45,8 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
+            description: [''],
+            uom: [UOM.PC, Validators.required],
             status: [Status.ENABLED, Validators.required]
         });
 
