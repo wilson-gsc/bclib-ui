@@ -5,13 +5,20 @@
     <span>AABBQ System</span>
     <span class="example-spacer"></span>
 
-    <button [matMenuTriggerFor]="account" mat-button routerLink="" *ngIf="user"><mat-icon>account_circle</mat-icon></button>
+    <button routerLink="" mat-button>Home</button>
+    
+    <button [matMenuTriggerFor]="inventory" routerLink="" mat-button>Inventory</button>
+    <mat-menu #inventory="matMenu">
+        <button mat-menu-item>Item</button>
+        <button mat-menu-item>Product</button>
+    </mat-menu>
+
+    <button [matMenuTriggerFor]="account" mat-button *ngIf="user"><mat-icon>account_circle</mat-icon></button>
     <mat-menu #account="matMenu">
         <button mat-menu-item>Profile</button>
         <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
-
-    <!-- <button routerLink="" mat-button>Home</button> -->
+    
     <!-- <button [matMenuTriggerFor]="lvl1master" routerLink="" mat-button>Master</button> -->
     <!-- <mat-menu #lvl1master="matMenu">
         <button [matMenuTriggerFor]="company" mat-menu-item>Company</button>
@@ -19,7 +26,7 @@
         <button [matMenuTriggerFor]="product" mat-menu-item>Product</button>
     </mat-menu> -->
 
-    <mat-menu #company="matMenu">
+    <!-- <mat-menu #company="matMenu">
         <button mat-menu-item>Term</button>
         <button mat-menu-item>Tax</button>
         <button mat-menu-item>Currency</button>
@@ -39,7 +46,7 @@
     <mat-menu #variant="matMenu">
         <button mat-menu-item>Color</button>
         <button mat-menu-item>Size</button>
-    </mat-menu>
+    </mat-menu> -->
 
     <!-- <button routerLink="input" mat-button>Input</button> -->
     <!-- <button routerLink="autocomplete" mat-button>Autocomplete</button> -->
@@ -56,9 +63,9 @@
                 <button routerLink="/" mat-button><mat-icon>home</mat-icon>Home</button>
             </mat-list-item>
             <div mat-subheader>Inventory</div>
-            <mat-list-item>
+            <!-- <mat-list-item>
                 <button mat-button routerLink="" routerLinkActive="active"><mat-icon>inventory_2</mat-icon>Item</button>
-            </mat-list-item>
+            </mat-list-item> -->
             <mat-list-item>
                 <button mat-button routerLink="" routerLinkActive="active"><mat-icon>menu_book</mat-icon>Product</button>
             </mat-list-item>
@@ -66,11 +73,11 @@
             <mat-list-item>
                 <button mat-button routerLink="/users" routerLinkActive="active"><mat-icon>person</mat-icon>Users</button>
             </mat-list-item>
-            <mat-list-item>
+            <!-- <mat-list-item>
                 <button mat-button routerLink="/items" routerLinkActive="active"><mat-icon>category</mat-icon>Items</button>
-            </mat-list-item>
+            </mat-list-item> -->
             <mat-list-item>
-                <button mat-button routerLink="" routerLinkActive="active"><mat-icon>restaurant_menu</mat-icon>Products</button>
+                <button mat-button routerLink="/products" routerLinkActive="active"><mat-icon>restaurant_menu</mat-icon>Products</button>
             </mat-list-item>
             <!-- <mat-list-item>
                 <button mat-button><mat-icon>settings</mat-icon>Settings</button>
