@@ -12,8 +12,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 import { AccountService } from '@app/_services';
 import { User } from '@app/_models';
-import { AlertComponent } from '../alert';
 import { NgIf } from '@angular/common';
+import { AlertComponent } from '../alert/alert.component';
 
 @Component({
   selector: 'app-menubar',

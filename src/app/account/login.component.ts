@@ -4,7 +4,8 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '@app/_services'
+import { AccountService } from '@app/_services'
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     templateUrl: 'login.component.html', 
@@ -15,6 +16,11 @@ export class LoginComponent implements OnInit {
     form!: FormGroup;
     loading = false;
     submitted = false;
+
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: false
+    };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -60,7 +66,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigateByUrl(returnUrl);
                 },
                 error: error => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, this.options);
                     this.loading = false;
                 }
             });

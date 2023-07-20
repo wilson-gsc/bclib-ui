@@ -9,9 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { AccountService, AlertService } from '@app/_services';
+import { AccountService } from '@app/_services';
 import { Role } from '@app/_models/role';
 import { Status } from '@app/_models/status';
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
@@ -31,6 +32,11 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
     username = '';
+
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -89,11 +95,11 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User saved', true);
+                    this.alertService.success('User saved', this.options);
                     this.router.navigateByUrl('/users');
                 },
                 error: error => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, this.options);
                     this.submitting = false;
                 }
             })

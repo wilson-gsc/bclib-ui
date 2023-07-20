@@ -9,9 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { ProductService, AlertService } from '@app/_services';
+import { ProductService } from '@app/_services';
 import { Status } from '@app/_models/status';
 import { UOM } from '@app/_models/uom';
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
@@ -30,6 +31,11 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
+
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
 
     constructor(
         private formBuilder: FormBuilder,
@@ -83,11 +89,11 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Product saved', true);
+                    this.alertService.success('Product saved', this.options);
                     this.router.navigateByUrl('/products');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, this.options);
                     this.submitting = false;
                 }
             })
