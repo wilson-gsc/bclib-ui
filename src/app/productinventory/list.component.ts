@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -12,42 +12,47 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Product } from '@app/_models';
-import { ProductService } from '@app/_services/product.service';
 import { TableUtil } from '@app/_helpers/table.util';
+import { ProductInventory } from '@app/_models/product-inventory';
+import { ProductInventoryService } from '@app/_services/product-inventory.service';
 
 @Component({ 
+    selector: 'product-inventory-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['products.component.css'],
+    styleUrls: ['product-inventories.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf,
+        RouterLink, NgFor, NgIf, CommonModule,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
     ]
 })
 export class ListComponent implements OnInit {
 
-    products?: Product[];
+    productInventories?: ProductInventory[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'name', 'description', 'uom', 'qty', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'transaction_date', 'product', 'balance_begin', 'product_in', 'total', 'product_out', 'balance_end', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private productService: ProductService) {}
+    constructor(private productInventoryService: ProductInventoryService) {}
 
     ngOnInit() {
-        this.getProducts();
+        this.getAll();
+        
     }
 
-    getProducts() {
-        this.productService.getAll()
+    getAll() {
+        this.productInventoryService.getAll()
             .pipe(first())
-            .subscribe(products => {
-                this.products = products;
-                this.dataSource = new MatTableDataSource<Product>(this.products);
+            .subscribe(productInventories => {
+                this.productInventories = productInventories;
+                this.dataSource = new MatTableDataSource<ProductInventory>(this.productInventories);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
+                this.dataSource.filterPredicate = (data: ProductInventory, filter: string) => {
+                    return data.product?.name?.toLocaleLowerCase().includes(filter);
+                }
             });
     }
 
@@ -57,6 +62,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("products", "Products");
+        TableUtil.exportTableToExcel("productInventories", "Product Inventories");
     }
 }

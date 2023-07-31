@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { NgIf, NgClass } from '@angular/common';
+import { Component, OnInit,  } from '@angular/core';
+import { NgIf, NgClass, CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { first } from 'rxjs/operators';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { first, map, startWith } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
 import { Status } from '@app/_models/status';
 import { UOM } from '@app/_models/uom';
 import { AlertService } from '@app/_components/alert/alert.service';
+import { ProductInventoryService } from '@app/_services/product-inventory.service';
+import { Product } from '@app/_models';
+import { Observable } from 'rxjs';
 
 @Component({ 
+    selector: 'product-inventory-add-edit-component',
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['products.component.css'],
+    styleUrls: ['product-inventories.component.css'],
     standalone: true,
     imports: [
-        NgIf, ReactiveFormsModule, NgClass, RouterLink,
+        NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule
+        MatSelectModule, MatAutocompleteModule
     ]
 })
 export class AddEditComponent implements OnInit {
@@ -37,10 +42,15 @@ export class AddEditComponent implements OnInit {
         keepAfterRouteChange: true
     };
 
+    // myControl = new FormControl('');
+    products!:Product[];
+    filteredOptions!: Observable<Product[]>;
+
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private productInventoryService: ProductInventoryService,
         private productService: ProductService,
         private alertService: AlertService
     ) { }
@@ -50,25 +60,36 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            name: ['', Validators.required],
-            description: [''],
-            uom: [UOM.PC, Validators.required],
-            status: [Status.ENABLED, Validators.required],
-            qty: [0]
+            product_name: ['', Validators.required],
+            balance_begin: [0, Validators.required],
+            product_in: [0, Validators.required],
+            total: [0],
+            product_out: [0, Validators.required],
+            balance_end: [0],
+            // status: [Status.ENABLED, Validators.required]
         });
 
-        this.title = 'Add Product';
+        this.title = 'Add Product Inventory';
         if (this.id) {
             // edit mode
-            this.title = 'Edit Product';
+            this.title = 'Edit Product Inventory';
             this.loading = true;
-            this.productService.getById(this.id)
+            this.productInventoryService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
+                    this.form.get('product_name')?.patchValue(x.product?.name);
                     this.form.patchValue(x);
                     this.loading = false;
                 });
         }
+
+        this.loadProducts();
+
+        this.filteredOptions = this.form.get('product_name')!.valueChanges.pipe(
+            startWith(''),
+            map(value => this._listfilter(value || '')),
+        );
+        
     }
 
     // convenience getter for easy access to form fields
@@ -90,8 +111,8 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Product saved', this.options);
-                    this.router.navigateByUrl('/products');
+                    this.alertService.success('Product Inventory saved', this.options);
+                    this.router.navigateByUrl('/product-inventories');
                 },
                 error: (error: string) => {
                     this.alertService.error(error, this.options);
@@ -103,7 +124,19 @@ export class AddEditComponent implements OnInit {
     private saveProduct() {
         // create or update product based on id param
         return this.id
-            ? this.productService.update(this.id!, this.form.value)
-            : this.productService.create(this.form.value);
+            ? this.productInventoryService.update(this.id!, this.form.value)
+            : this.productInventoryService.create(this.form.value);
     }
+
+    loadProducts(){
+        this.productService.getAllEnabled().subscribe(products => {
+            this.products = products;
+        })
+    }
+
+    private _listfilter(name: string): Product[] {
+        const filterValue = name.toLowerCase();
+        return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
 }

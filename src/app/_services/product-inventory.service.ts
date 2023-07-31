@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { Product } from '@app/_models';
+import { ProductInventory } from '@app/_models/product-inventory';
 
 @Injectable({ providedIn: 'root' })
-export class ProductService {
+export class ProductInventoryService {
 
     constructor(
         private router: Router,
@@ -15,23 +15,19 @@ export class ProductService {
     ) { }
 
     getAll() {
-        return this.http.get<Product[]>(`${environment.apiUrl}/products`);
+        return this.http.get<ProductInventory[]>(`${environment.apiUrl}/product-inventory`);
     }
 
-    getAllEnabled() {
-        return this.http.get<Product[]>(`${environment.apiUrl}/products/enabled`);
-    }
-
-    create(product: Product) {
-        return this.http.post(`${environment.apiUrl}/products`, product);
+    create(productInventory: ProductInventory) {
+        return this.http.post(`${environment.apiUrl}/product-inventory`, productInventory);
     }
 
     getById(id: string) {
-        return this.http.get<Product>(`${environment.apiUrl}/products/${id}`);
+        return this.http.get<ProductInventory>(`${environment.apiUrl}/product-inventory/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/products/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/product-inventory/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));

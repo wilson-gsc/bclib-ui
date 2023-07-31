@@ -7,4 +7,5 @@ export class Product {
     description?: string;
     uom?: UOM;
     status?: Status;
+    qty?: number;
 }
