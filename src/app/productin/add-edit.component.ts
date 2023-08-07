@@ -11,17 +11,15 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
-import { Status } from '@app/_models/status';
-import { UOM } from '@app/_models/uom';
 import { AlertService } from '@app/_components/alert/alert.service';
-import { ProductInventoryService } from '@app/_services/product-inventory.service';
+import { ProductInService } from '@app/_services/product-in.service';
 import { Product } from '@app/_models';
 import { Observable } from 'rxjs';
 
 @Component({ 
-    selector: 'product-inventory-add-edit-component',
+    selector: 'product-in-add-edit-component',
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['product-inventories.component.css'],
+    styleUrls: ['product-ins.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
@@ -51,7 +49,7 @@ export class AddEditComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private productInventoryService: ProductInventoryService,
+        private productInService: ProductInService,
         private productService: ProductService,
         private alertService: AlertService
     ) { }
@@ -62,20 +60,17 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             product: ['', Validators.required],
-            balance_begin: [0, Validators.required],
-            product_in: [0, Validators.required],
-            total: [0],
-            product_out: [0, Validators.required],
-            balance_end: [0],
+            qty: [0, Validators.required],
+            description: ['']
             // status: [Status.ENABLED, Validators.required]
         });
 
-        this.title = 'Add Product Inventory';
+        this.title = 'Add Product In';
         if (this.id) {
             // edit mode
-            this.title = 'Edit Product Inventory';
+            this.title = 'Edit Product In';
             this.loading = true;
-            this.productInventoryService.getById(this.id)
+            this.productInService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.get('product')?.patchValue(x.product);
@@ -113,8 +108,8 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Product Inventory saved', this.options);
-                    this.router.navigateByUrl('/product-inventories');
+                    this.alertService.success('Product In saved', this.options);
+                    this.router.navigateByUrl('/product-ins');
                 },
                 error: (error: string) => {
                     this.alertService.error(error, this.options);
@@ -126,8 +121,8 @@ export class AddEditComponent implements OnInit {
     private saveProduct() {
         // create or update product based on id param
         return this.id
-            ? this.productInventoryService.update(this.id!, this.form.value)
-            : this.productInventoryService.create(this.form.value);
+            ? this.productInService.update(this.id!, this.form.value)
+            : this.productInService.create(this.form.value);
     }
 
     loadProducts(){

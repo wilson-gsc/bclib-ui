@@ -12,18 +12,18 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { TableUtil } from '@app/_helpers/table.util';
-import { ProductInventory } from '@app/_models/product-inventory';
-import { ProductInventoryService } from '@app/_services/product-inventory.service';
+import { ProductIn } from '@app/_models/product-in';
+import { ProductInService } from '@app/_services/product-in.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({ 
-    selector: 'product-inventory-list-component',
+    selector: 'product-in-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['product-inventories.component.css'],
+    styleUrls: ['product-ins.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf, CommonModule, ReactiveFormsModule,
@@ -34,16 +34,16 @@ import { MatNativeDateModule } from '@angular/material/core';
 })
 export class ListComponent implements OnInit {
 
-    productInventories?: ProductInventory[];
+    productIns?: ProductIn[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'transaction_date', 'product', 'balance_begin', 'product_in', 'total', 'product_out', 'balance_end', 'action'];
+    displayedColumns: string[] = ['id', 'transaction_date', 'product', 'qty', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
     filterDate = new FormControl(new Date());
 
     constructor(
-        private productInventoryService: ProductInventoryService,
+        private productInService: ProductInService,
         public datePipe: DatePipe
     ) {}
 
@@ -52,11 +52,11 @@ export class ListComponent implements OnInit {
     }
 
     getAll(filterDate: any) {
-        this.productInventoryService.getAll(filterDate)
+        this.productInService.getAll(filterDate)
             .pipe(first())
-            .subscribe(productInventories => {
-                this.productInventories = productInventories;
-                this.dataSource = new MatTableDataSource<ProductInventory>(this.productInventories);
+            .subscribe(productIns => {
+                this.productIns = productIns;
+                this.dataSource = new MatTableDataSource<ProductIn>(this.productIns);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
                 this.dataSource.filterPredicate = (data: any, filter: string) => {
@@ -79,7 +79,7 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("product-inventories", "Product Inventories");
+        TableUtil.exportTableToExcel("productIns", "Product Ins");
     }
 
     onDateChange(event: any) {
