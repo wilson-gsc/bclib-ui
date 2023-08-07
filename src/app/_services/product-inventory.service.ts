@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
 import { ProductInventory } from '@app/_models/product-inventory';
@@ -14,8 +14,8 @@ export class ProductInventoryService {
         private http: HttpClient
     ) { }
 
-    getAll() {
-        return this.http.get<ProductInventory[]>(`${environment.apiUrl}/product-inventory`);
+    getAll(filterDate: any) {
+        return this.http.get<ProductInventory[]>(`${environment.apiUrl}/product-inventory/${filterDate}`);
     }
 
     create(productInventory: ProductInventory) {
@@ -23,7 +23,7 @@ export class ProductInventoryService {
     }
 
     getById(id: string) {
-        return this.http.get<ProductInventory>(`${environment.apiUrl}/product-inventory/${id}`);
+        return this.http.get<ProductInventory>(`${environment.apiUrl}/product-inventory/edit/${id}`);
     }
 
     update(id: string, params: any) {

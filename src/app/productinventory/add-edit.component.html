@@ -9,20 +9,20 @@
                     <input type="text"
                         placeholder="Select..."
                         aria-label="Product"
-                        [ngClass]="{ 'is-invalid': submitted && f.product_name.errors }"
+                        [ngClass]="{ 'is-invalid': submitted && f.product.errors }"
                         matInput
                         [matAutocomplete]="auto"
-                        formControlName="product_name"
+                        formControlName="product"
                     >
                 </span>
                 <span *ngIf="id">
-                    <input matInput disabled value="{{form.get('product_name')?.value}}">
+                    <input matInput disabled value="{{prodName}}">
                 </span>
-                <mat-error *ngIf="submitted && f.product_name.errors">
-                    <span *ngIf="f.product_name.errors.required">Product is required</span>
+                <mat-error *ngIf="submitted && f.product.errors">
+                    <span *ngIf="f.product.errors.required">Product is required</span>
                 </mat-error>
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{option.name}}
                 </mat-option>
                 </mat-autocomplete>

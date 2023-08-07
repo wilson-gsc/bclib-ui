@@ -11,4 +11,5 @@ export class ProductInventory {
     product_in?: number;
     product_out?: number;
     balance_end?: number;
+    transaction_date?: Date;
 }

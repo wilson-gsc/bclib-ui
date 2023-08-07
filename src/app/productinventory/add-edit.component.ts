@@ -36,6 +36,7 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
+    prodName?: string;
 
     options = {
         autoClose: true,
@@ -60,7 +61,7 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            product_name: ['', Validators.required],
+            product: ['', Validators.required],
             balance_begin: [0, Validators.required],
             product_in: [0, Validators.required],
             total: [0],
@@ -77,7 +78,9 @@ export class AddEditComponent implements OnInit {
             this.productInventoryService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
-                    this.form.get('product_name')?.patchValue(x.product?.name);
+                    this.form.get('product')?.patchValue(x.product);
+                    console.log(x)
+                    this.prodName = x.product?.name;
                     this.form.patchValue(x);
                     this.loading = false;
                 });
@@ -85,7 +88,7 @@ export class AddEditComponent implements OnInit {
 
         this.loadProducts();
 
-        this.filteredOptions = this.form.get('product_name')!.valueChanges.pipe(
+        this.filteredOptions = this.form.get('product')!.valueChanges.pipe(
             startWith(''),
             map(value => this._listfilter(value || '')),
         );
@@ -134,9 +137,13 @@ export class AddEditComponent implements OnInit {
         })
     }
 
-    private _listfilter(name: string): Product[] {
-        const filterValue = name.toLowerCase();
+    private _listfilter(product: Product): Product[] {
+        const filterValue = product && product.name ? product?.name?.toLowerCase() : '';
         return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    displayFn(product: Product): string {
+        return product && product.name ? product.name : '';
     }
 
 }
