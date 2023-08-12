@@ -22,6 +22,10 @@ export class ProductService {
         return this.http.get<Product[]>(`${environment.apiUrl}/products/enabled`);
     }
 
+    getAllEnabledQty() {
+        return this.http.get<Product[]>(`${environment.apiUrl}/products/enabled-qty`);
+    }
+
     create(product: Product) {
         return this.http.post(`${environment.apiUrl}/products`, product);
     }

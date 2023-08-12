@@ -1,0 +1,110 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-card>
+        <mat-card-header><h2 style="margin-top: 1%; margin-left: 1%;">{{title}}</h2></mat-card-header>
+        <mat-card-content>
+
+            <mat-form-field class="mat-50">
+                <mat-label>OR Number</mat-label>
+                <input type="text" formControlName="or_number" [ngClass]="{ 'is-invalid': submitted && f.or_number.errors }" matInput />
+                <mat-error *ngIf="submitted && f.or_number.errors">
+                    <span *ngIf="f.or_number.errors.required">OR Number is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Ordered to</mat-label>
+                <input type="text" formControlName="ordered_to" [ngClass]="{ 'is-invalid': submitted && f.ordered_to.errors }" matInput />
+                <mat-error *ngIf="submitted && f.ordered_to.errors">
+                    <span *ngIf="f.ordered_to.errors.required">Ordered To is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Address</mat-label>
+                <input type="text" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" matInput />
+                <mat-error *ngIf="submitted && f.address.errors">
+                    <span *ngIf="f.address.errors.required">Address is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Business Name</mat-label>
+                <input type="text" formControlName="business_name" [ngClass]="{ 'is-invalid': submitted && f.business_name.errors }" matInput />
+                <mat-error *ngIf="submitted && f.business_name.errors">
+                    <span *ngIf="f.business_name.errors.required">Business Name is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Total Amount</mat-label>
+                <input matInput disabled value="{{totalAmount | currency:'PHP'}}">
+            </mat-form-field>
+
+        </mat-card-content>
+        <mat-card-footer>
+            <div style="margin: 2%; text-align: right;">
+                <button mat-raised-button type="submit" color="primary" [disabled]="submitting">
+                    <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+                    <span *ngIf="id">Update</span>
+                    <span *ngIf="!id">Save</span>
+                </button>
+                <a routerLink="/orders" class="btn btn-link">Cancel</a>
+            </div>
+        </mat-card-footer>
+    </mat-card>
+</form>
+    <mat-card>
+        <mat-card-header>
+            <h2 style="margin-top: 1%; margin-left: 1%;">Order Details</h2>
+            
+            <span *ngIf="id">
+                <button style="margin-left: 75%;" (click)="addDetail()" mat-raised-button color="primary">Add (+)</button>
+            </span>
+            
+        </mat-card-header>
+        <mat-card-content>
+            <table id="orderDetails" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="product">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Product </th>
+                    <td mat-cell *matCellDef="let element"> {{element.product.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="qty">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Qty </th>
+                    <td mat-cell *matCellDef="let element"> {{element.qty}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Price </th>
+                    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="total">
+                    <th mat-sort-header mat-header-cell *matHeaderCellDef> Total </th>
+                    <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button (click)="deleteDetail(element.id)" mat-raised-button color="primary">Remove</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
