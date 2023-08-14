@@ -6,11 +6,12 @@ export class User {
         id?: string;
         username?: string;
         password?: string;
-        firstName?: string;
-        lastName?: string;
+        first_name?: string;
+        last_name?: string;
         role?: Role;
         status?: Status;
         token?: string;
+        email?: string
     }
     access_token?: string;
 }

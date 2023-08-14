@@ -7,3 +7,7 @@ p {
     margin-left: 1rem;
     margin-bottom: 1rem;
 }
+
+.mat-icon {
+    transform: scale(1.5);
+}

@@ -12,10 +12,27 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
+                <mat-label>UOM</mat-label>
+                <select matNativeControl required formControlName="uom" matInput>
+                    <option value="PC">PC</option>
+                    <option value="BOX">BOX</option>
+                    <option value="KILO">KILO</option>
+                </select>
+                <mat-error *ngIf="submitted && f.uom.errors">
+                    <span *ngIf="f.uom.errors.required">UOM is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Description</mat-label>
+                <textarea formControlName="description" matInput></textarea>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
                 <mat-label>Status</mat-label>
                 <select matNativeControl required formControlName="status" matInput>
                     <option value="Enabled">Enabled</option>
-                        <option value="Disabled">Disabled</option>
+                    <option value="Disabled">Disabled</option>
                 </select>
                 <mat-error *ngIf="submitted && f.status.errors">
                     <span *ngIf="f.status.errors.required">Status is required</span>

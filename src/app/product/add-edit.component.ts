@@ -9,12 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { ItemService, AlertService } from '@app/_services';
+import { ProductService } from '@app/_services';
 import { Status } from '@app/_models/status';
+import { UOM } from '@app/_models/uom';
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['add-edit.component.css'],
+    styleUrls: ['products.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
@@ -30,11 +32,16 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
 
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
+
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private itemService: ItemService,
+        private productService: ProductService,
         private alertService: AlertService
     ) { }
 
@@ -44,15 +51,18 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             name: ['', Validators.required],
-            status: [Status.ENABLED, Validators.required]
+            description: [''],
+            uom: [UOM.PC, Validators.required],
+            status: [Status.ENABLED, Validators.required],
+            qty: [0]
         });
 
-        this.title = 'Add Item';
+        this.title = 'Add Product';
         if (this.id) {
             // edit mode
-            this.title = 'Edit Item';
+            this.title = 'Edit Product';
             this.loading = true;
-            this.itemService.getById(this.id)
+            this.productService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
@@ -76,24 +86,24 @@ export class AddEditComponent implements OnInit {
         }
         
         this.submitting = true;
-        this.saveItem()
+        this.saveProduct()
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Item saved', true);
-                    this.router.navigateByUrl('/items');
+                    this.alertService.success('Product saved', this.options);
+                    this.router.navigateByUrl('/products');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error, this.options);
                     this.submitting = false;
                 }
             })
     }
 
-    private saveItem() {
-        // create or update item based on id param
+    private saveProduct() {
+        // create or update product based on id param
         return this.id
-            ? this.itemService.update(this.id!, this.form.value)
-            : this.itemService.create(this.form.value);
+            ? this.productService.update(this.id!, this.form.value)
+            : this.productService.create(this.form.value);
     }
 }

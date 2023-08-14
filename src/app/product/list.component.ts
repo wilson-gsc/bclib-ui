@@ -12,12 +12,13 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Item } from '@app/_models';
-import { ItemService } from '@app/_services/item.service';
+import { Product } from '@app/_models';
+import { ProductService } from '@app/_services/product.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
     templateUrl: 'list.component.html',
+    styleUrls: ['products.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -27,24 +28,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    items?: Item[];
+    products?: Product[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'name', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'description', 'uom', 'qty', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private itemService: ItemService) {}
+    constructor(private productService: ProductService) {}
 
     ngOnInit() {
-        this.getItems();
+        this.getProducts();
     }
 
-    getItems() {
-        this.itemService.getAll()
+    getProducts() {
+        this.productService.getAll()
             .pipe(first())
-            .subscribe(items => {
-                this.items = items;
-                this.dataSource = new MatTableDataSource<Item>(this.items);
+            .subscribe(products => {
+                this.products = products;
+                this.dataSource = new MatTableDataSource<Product>(this.products);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -56,6 +57,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("items", "Items");
+        TableUtil.exportTableToExcel("products", "Products");
     }
 }
