@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { first, map, startWith } from 'rxjs/operators';
+import { filter, first, map, startWith } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
 import { Status } from '@app/_models/status';
@@ -89,7 +89,10 @@ export class AddEditComponent implements OnInit {
 
         this.filteredOptions = this.form.get('product')!.valueChanges.pipe(
             startWith(''),
-            map(value => this._listfilter(value || '')),
+            map(value => {
+                const name = typeof value === 'string' ? value : value?.name;
+                return name ? this._listfilter(name as string) : this.products?.slice();
+            }),
         );
         
     }
@@ -136,9 +139,9 @@ export class AddEditComponent implements OnInit {
         })
     }
 
-    private _listfilter(product: Product): Product[] {
-        const filterValue = product && product.name ? product?.name?.toLowerCase() : '';
-        return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
+    private _listfilter(name: string): Product[] {
+        const filterValue = name.toLowerCase();
+        return this.products.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
     displayFn(product: Product): string {
