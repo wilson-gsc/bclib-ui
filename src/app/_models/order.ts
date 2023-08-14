@@ -1,4 +1,4 @@
-import { OrderDetail } from "./order-detail";
+import { PaymentType } from "./payment-type";
 
 export class Order {
     id?: string;
@@ -10,4 +10,5 @@ export class Order {
         id?: string;
     };
     total_amount?: number;
+    payment_type?: PaymentType
 }

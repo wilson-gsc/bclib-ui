@@ -7,15 +7,21 @@
 
     <button routerLink="" mat-button>Home</button>
     
-    <button [matMenuTriggerFor]="inventory" routerLink="" mat-button>Inventory</button>
+    <button [matMenuTriggerFor]="inventory" mat-button>Inventory</button>
     <mat-menu #inventory="matMenu">
         <!-- <button mat-menu-item>Item</button> -->
         <button mat-menu-item routerLink="/product-inventories">Product</button>
+        <button mat-menu-item routerLink="/product-ins">Product In</button>
     </mat-menu>
 
-    <button [matMenuTriggerFor]="account" mat-button *ngIf="user"><mat-icon>account_circle</mat-icon></button>
+    <button [matMenuTriggerFor]="sales" mat-button>Sales</button>
+    <mat-menu #sales="matMenu">
+        <button mat-menu-item routerLink="/orders">Order</button>
+    </mat-menu>
+
+    <button [matMenuTriggerFor]="account" mat-button *ngIf="user"><mat-icon>account_circle</mat-icon>{{user.user?.username}}</button>
     <mat-menu #account="matMenu">
-        <button mat-menu-item>Profile</button>
+        <button mat-menu-item routerLink="/users/profile/{{user?.user?.id}}">Profile</button>
         <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
     
