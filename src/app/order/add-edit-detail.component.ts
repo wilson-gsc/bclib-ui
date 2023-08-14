@@ -89,7 +89,10 @@ export class AddEditDetailComponent implements OnInit {
 
         this.filteredOptions = this.form.get('product')!.valueChanges.pipe(
             startWith(''),
-            map(value => this._listfilter(value || '')),
+            map(value => {
+                const name = typeof value === 'string' ? value : value?.name;
+                return name ? this._listfilter(name as string) : this.products?.slice();
+            }),
         );
 
         this.sub=merge(
@@ -144,9 +147,9 @@ export class AddEditDetailComponent implements OnInit {
         })
     }
 
-    private _listfilter(product: Product): Product[] {
-        const filterValue = product && product.name ? product?.name?.toLowerCase() : '';
-        return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
+    private _listfilter(name: string): Product[] {
+        const filterValue = name.toLowerCase();
+        return this.products.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
     displayFn(product: Product): string {
