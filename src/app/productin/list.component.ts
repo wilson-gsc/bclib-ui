@@ -62,7 +62,7 @@ export class ListComponent implements OnInit {
                 this.dataSource.filterPredicate = (data: any, filter: string) => {
                     const dataDate = new Date(data.transaction_date);
                     const filterDate = new Date(filter);
-                    
+                    console.log(filter)
                     return data.product?.name?.toLocaleLowerCase().includes(filter) ||
                     (
                         dataDate.getFullYear() === filterDate.getFullYear() &&

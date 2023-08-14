@@ -16,6 +16,7 @@ import { Observable } from 'rxjs';
 import { Order } from '@app/_models/order';
 import { OrderService } from '@app/_services/order.service';
 import { OrderDetail } from '@app/_models/order-detail';
+import { PaymentType } from '@app/_models/payment-type';
 
 @Component({ 
     selector: 'order-add-edit-component',
@@ -66,6 +67,7 @@ export class AddEditComponent implements OnInit {
             address: ['', Validators.required],
             business_name: ['', Validators.required],
             description: [''],
+            payment_type: [PaymentType.CASH, Validators.required]
             // status: [Status.ENABLED, Validators.required]
         });
 

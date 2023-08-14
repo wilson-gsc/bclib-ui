@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
 
     orders?: Order[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'transaction_date', 'or_number', 'ordered_to', 'total_amount', 'action'];
+    displayedColumns: string[] = ['id', 'transaction_date', 'or_number', 'ordered_to', 'total_amount', 'payment_type', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
