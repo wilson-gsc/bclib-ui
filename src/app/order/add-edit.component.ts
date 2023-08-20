@@ -1,7 +1,7 @@
 import { Component, OnInit,  } from '@angular/core';
 import { NgIf, NgClass, CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
 import { first } from 'rxjs/operators';
 
 import { AlertService } from '@app/_components/alert/alert.service';
@@ -17,6 +18,7 @@ import { Order } from '@app/_models/order';
 import { OrderService } from '@app/_services/order.service';
 import { OrderDetail } from '@app/_models/order-detail';
 import { PaymentType } from '@app/_models/payment-type';
+import { ConfirmationDialog } from '@app/_components/dialog/confirmation-dialog.component';
 
 @Component({ 
     selector: 'order-add-edit-component',
@@ -26,7 +28,7 @@ import { PaymentType } from '@app/_models/payment-type';
     imports: [
         NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule, MatAutocompleteModule, MatTableModule
+        MatSelectModule, MatAutocompleteModule, MatTableModule, MatDialogModule
     ]
 })
 export class AddEditComponent implements OnInit {
@@ -54,7 +56,8 @@ export class AddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private orderService: OrderService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        public dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -141,8 +144,41 @@ export class AddEditComponent implements OnInit {
         this.router.navigateByUrl('/orders/edit-detail/'+detailId);
     }
 
-    deleteDetail(detailId: any) {
-        this.deleteOrderDetail(detailId)
+    // deleteDetail(detailId: any) {
+    //     this.deleteOrderDetail(detailId)
+    //         .pipe(first())
+    //         .subscribe({
+    //             next: () => {
+    //                 this.alertService.success('Order detail deleted', this.options);
+    //                 this.router.navigateByUrl('/orders/edit/'+this.id).then(()=>{
+    //                     window.location.reload();
+    //                 });
+    //             },
+    //             error: (error: string) => {
+    //                 this.alertService.error(error, this.options);
+    //             }
+    //         })
+    // }
+ 
+    private deleteOrderDetail(detailId: any){
+        return this.orderService.deleteDetail(detailId);
+    }
+
+    openDialog(detailId: any) {
+        const dialogRef = this.dialog.open(ConfirmationDialog,{
+          data:{
+            title: 'Remove order detail',
+            message: 'Are you sure want to remove?',
+            buttonText: {
+              ok: 'Yes',
+              cancel: 'Cancel'
+            }
+          }
+        });
+        
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+          if (confirmed) {
+            this.deleteOrderDetail(detailId)
             .pipe(first())
             .subscribe({
                 next: () => {
@@ -155,25 +191,8 @@ export class AddEditComponent implements OnInit {
                     this.alertService.error(error, this.options);
                 }
             })
-    }
- 
-    private deleteOrderDetail(detailId: any){
-        return this.orderService.deleteDetail(detailId);
-    }
-
-    // loadOrders(){
-    //     this.orderService.getAll().subscribe(products => {
-    //         this.products = products;
-    //     })
-    // }
-
-    // private _listfilter(product: Product): Product[] {
-    //     const filterValue = product && product.name ? product?.name?.toLowerCase() : '';
-    //     return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
-    // }
-
-    // displayFn(product: Product): string {
-    //     return product && product.name ? product.name : '';
-    // }
+          }
+        });
+      }
 
 }
