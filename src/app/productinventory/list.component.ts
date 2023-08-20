@@ -36,7 +36,9 @@ export class ListComponent implements OnInit {
 
     productInventories?: ProductInventory[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'transaction_date', 'product', 'balance_begin', 'product_in', 'total', 'product_out', 'balance_end', 'action'];
+    displayedColumns: string[] = [
+        'id', 'transaction_date', 'product', 'balance_begin', 'product_in', 'total', 'product_out', 'balance_end', 'total_prices', 'action'
+    ];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

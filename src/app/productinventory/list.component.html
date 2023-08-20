@@ -59,6 +59,11 @@
                 <td mat-cell *matCellDef="let element"> {{element.balance_end}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="total_prices">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> Total Prices </th>
+                <td mat-cell *matCellDef="let element"> {{element.total_prices}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Action </th>
                 <td mat-cell *matCellDef="let element">
