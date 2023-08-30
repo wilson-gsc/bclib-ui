@@ -17,6 +17,7 @@ import { ItemService } from '@app/_services/item.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
+    selector: 'item-list-component',
     templateUrl: 'list.component.html',
     styleUrls: ['items.component.css'],
     standalone: true,

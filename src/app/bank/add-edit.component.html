@@ -12,31 +12,8 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>UOM</mat-label>
-                <select matNativeControl required formControlName="uom" matInput>
-                    <option value="PC">PC</option>
-                    <option value="LTR">LTR</option>
-                    <option value="ML">ML</option>
-                    <option value="BOX">BOX</option>
-                    <option value="KILO">KILO</option>
-                </select>
-                <mat-error *ngIf="submitted && f.uom.errors">
-                    <span *ngIf="f.uom.errors.required">UOM is required</span>
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="mat-50">
                 <mat-label>Description</mat-label>
                 <textarea formControlName="description" matInput></textarea>
-            </mat-form-field>
-
-            <mat-form-field class="mat-50">
-                <mat-label>Quantity</mat-label>
-                <input type="number" formControlName="qty" [ngClass]="{ 'is-invalid': submitted && f.qty.errors }" matInput 
-                    min="0" #input OnlyNumber="true">
-                <mat-error *ngIf="submitted && f.qty.errors">
-                    <span *ngIf="f.qty.errors.required">Quantity is required</span>
-                </mat-error>
             </mat-form-field>
 
             <mat-form-field class="mat-50">
@@ -58,7 +35,7 @@
                     <span *ngIf="id">Update</span>
                     <span *ngIf="!id">Save</span>
                 </button>
-                <a routerLink="/products" class="btn btn-link">Cancel</a>
+                <a routerLink="/items" class="btn btn-link">Cancel</a>
             </div>
         </mat-card-footer>
     </mat-card>

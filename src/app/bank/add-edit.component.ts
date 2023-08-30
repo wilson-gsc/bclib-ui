@@ -9,14 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { AccountService } from '@app/_services';
-import { Role } from '@app/_helpers/enums/role';
+import { BankService, AlertService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
-import { AlertService } from '@app/_components/alert/alert.service';
+import { UOM } from '@app/_helpers/enums/uom';
 
 @Component({ 
+    selector: 'bank-add-edit-component',
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['add-edit.component.css'],
+    styleUrls: ['banks.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
@@ -31,18 +31,12 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
-    username = '';
-
-    options = {
-        autoClose: true,
-        keepAfterRouteChange: true
-    };
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
+        private bankService: BankService,
         private alertService: AlertService
     ) { }
 
@@ -51,23 +45,17 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            first_name: ['', Validators.required],
-            last_name: ['', Validators.required],
-            username: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            role: [Role.User, Validators.required],
-            status: [Status.ENABLED, Validators.required],
-            // password only required in add mode
-            password: ['', [Validators.minLength(6), ...(!this.id ? [Validators.required] : [])]]
+            name: ['', Validators.required],
+            description: [''],
+            status: [Status.ENABLED, Validators.required]
         });
 
-        this.title = 'Add User';
+        this.title = 'Add Bank';
         if (this.id) {
             // edit mode
-            this.title = 'Edit User';
+            this.title = 'Edit Bank';
             this.loading = true;
-            this.username = this.form.get('username')?.value;
-            this.accountService.getById(this.id)
+            this.bankService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
@@ -91,24 +79,24 @@ export class AddEditComponent implements OnInit {
         }
         
         this.submitting = true;
-        this.saveUser()
+        this.saveBank()
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User saved', this.options);
-                    this.router.navigateByUrl('/users');
+                    this.alertService.success('Bank saved', true);
+                    this.router.navigateByUrl('/banks');
                 },
-                error: error => {
-                    this.alertService.error(error, this.options);
+                error: (error: string) => {
+                    this.alertService.error(error);
                     this.submitting = false;
                 }
             })
     }
 
-    private saveUser() {
-        // create or update user based on id param
+    private saveBank() {
+        // create or update bank based on id param
         return this.id
-            ? this.accountService.update(this.id!, this.form.value)
-            : this.accountService.register(this.form.value);
+            ? this.bankService.update(this.id!, this.form.value)
+            : this.bankService.create(this.form.value);
     }
 }

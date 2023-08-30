@@ -1,5 +1,5 @@
-import { Role } from "./role";
-import { Status } from "./status";
+import { Role } from "../_helpers/enums/role";
+import { Status } from "../_helpers/enums/status";
 
 export class User {
     user?: {

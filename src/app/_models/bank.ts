@@ -1,10 +1,8 @@
 import { Status } from "../_helpers/enums/status";
-import { UOM } from "../_helpers/enums/uom";
 
-export class Item {
+export class Bank {
     id?: string;
     name?: string;
     description?: string;
-    uom?: UOM;
     status?: Status;
 }

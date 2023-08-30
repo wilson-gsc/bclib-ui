@@ -6,6 +6,7 @@ import { authGuard } from './_helpers';
 
 const usersRoutes = () => import('./users/users.routes').then(x => x.USERS_ROUTES);
 const itemsRoutes = () => import('./item/items.routes').then(x => x.ITEMS_ROUTES);
+const banksRoutes = () => import('./bank/banks.routes').then(x => x.BANKS_ROUTES);
 const productsRoutes = () => import('./product/products.routes').then(x => x.PRODUCTS_ROUTES);
 const productInventoriesRoutes = () => import('./productinventory/product-inventories.routes').then(x => x.PRODUCT_INVENTORIES_ROUTES);
 const productInsRoutes = () => import('./productin/product-ins.routes').then(x => x.PRODUCT_INS_ROUTES);
@@ -17,6 +18,8 @@ export const APP_ROUTES: Routes = [
     { path: 'account/login', component: LoginComponent },
 
     { path: 'items', loadChildren: itemsRoutes, canActivate: [authGuard] },
+
+    { path: 'banks', loadChildren: banksRoutes, canActivate: [authGuard] },
 
     { path: 'products', loadChildren: productsRoutes, canActivate: [authGuard] },
 

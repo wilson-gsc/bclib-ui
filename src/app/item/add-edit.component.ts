@@ -10,8 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
 import { ItemService, AlertService } from '@app/_services';
-import { Status } from '@app/_models/status';
-import { UOM } from '@app/_models/uom';
+import { Status } from '@app/_helpers/enums/status';
+import { UOM } from '@app/_helpers/enums/uom';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',

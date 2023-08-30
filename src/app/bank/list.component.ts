@@ -12,13 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Product } from '@app/_models';
-import { ProductService } from '@app/_services/product.service';
+import { Bank } from '@app/_models';
+import { BankService } from '@app/_services/bank.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
+    selector: 'bank-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['products.component.css'],
+    styleUrls: ['banks.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -28,24 +29,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    products?: Product[];
+    banks?: Bank[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'name', 'uom', 'qty', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'description', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private productService: ProductService) {}
+    constructor(private bankService: BankService) {}
 
     ngOnInit() {
-        this.getProducts();
+        this.getBanks();
     }
 
-    getProducts() {
-        this.productService.getAll()
+    getBanks() {
+        this.bankService.getAll()
             .pipe(first())
-            .subscribe(products => {
-                this.products = products;
-                this.dataSource = new MatTableDataSource<Product>(this.products);
+            .subscribe(banks => {
+                this.banks = banks;
+                this.dataSource = new MatTableDataSource<Bank>(this.banks);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -57,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("products", "Products");
+        TableUtil.exportTableToExcel("banks", "Banks");
     }
 }

@@ -1,5 +1,5 @@
 import { Product } from "./product";
-import { Status } from "./status";
+import { Status } from "../_helpers/enums/status";
 
 export class ProductInventory {
     id?: string;
