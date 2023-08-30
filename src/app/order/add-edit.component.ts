@@ -9,16 +9,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogModule} from '@angular/material/dialog';
-import { first } from 'rxjs/operators';
+import { MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { first, map, startWith } from 'rxjs/operators';
 
 import { AlertService } from '@app/_components/alert/alert.service';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subscription } from 'rxjs';
 import { Order } from '@app/_models/order';
 import { OrderService } from '@app/_services/order.service';
 import { OrderDetail } from '@app/_models/order-detail';
-import { PaymentType } from '@app/_models/payment-type';
+import { PaymentType } from '@app/_helpers/enums/payment-type';
 import { ConfirmationDialog } from '@app/_components/dialog/confirmation-dialog.component';
+import { OrderType } from '@app/_helpers/enums/order-type';
+import { Bank } from '@app/_models';
+import { BankService } from '@app/_services';
 
 @Component({ 
     selector: 'order-add-edit-component',
@@ -28,10 +32,12 @@ import { ConfirmationDialog } from '@app/_components/dialog/confirmation-dialog.
     imports: [
         NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule, MatAutocompleteModule, MatTableModule, MatDialogModule
+        MatSelectModule, MatAutocompleteModule, MatTableModule, MatDialogModule,
+        MatCheckboxModule
     ]
 })
 export class AddEditComponent implements OnInit {
+
     form!: FormGroup;
     id?: string;
     title!: string;
@@ -39,17 +45,20 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
     totalAmount!: number;
+    sub!:Subscription;
 
     options = {
         autoClose: true,
         keepAfterRouteChange: true
     };
 
-    filteredOptions!: Observable<Order[]>;
+    filteredOptions!: Observable<Bank[]>;
 
     orderDetails!:OrderDetail[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'product', 'qty', 'price', 'total', 'action'];
+    displayedColumns: string[] = ['product', 'qty', 'price', 'total', 'action'];
+
+    banks!:Bank[];
 
     constructor(
         private formBuilder: FormBuilder,
@@ -57,7 +66,8 @@ export class AddEditComponent implements OnInit {
         private router: Router,
         private orderService: OrderService,
         private alertService: AlertService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private bankService: BankService,
     ) { }
 
     ngOnInit() {
@@ -70,7 +80,14 @@ export class AddEditComponent implements OnInit {
             address: ['', Validators.required],
             business_name: ['', Validators.required],
             description: [''],
-            payment_type: [PaymentType.CASH, Validators.required]
+            payment_type: [PaymentType.CASH, Validators.required],
+            total_amount: [0],
+            order_type: [OrderType.DINEIN, Validators.required],
+            total_cash: [0],
+            credit_card: [false],
+            credit_card_amount: [0],
+            credit_card_bank: [''],
+            credit_card_ref_num: ['']
             // status: [Status.ENABLED, Validators.required]
         });
 
@@ -84,18 +101,29 @@ export class AddEditComponent implements OnInit {
                 .subscribe(x => {
                     this.orderDetails = x.details;
                     this.dataSource = new MatTableDataSource<OrderDetail>(this.orderDetails);
+                    x.total_cash = x.total_amount;
                     this.totalAmount = x.total_amount ? x.total_amount : 0;
                     this.form.patchValue(x);
                     this.loading = false;
                 });
         }
 
-        // this.loadOrders();
+        this.loadBanks();
 
-        // this.filteredOptions = this.form.get('or_number')!.valueChanges.pipe(
-        //     startWith(''),
-        //     map(value => this._listfilter(value || '')),
-        // );
+        this.filteredOptions = this.form.get('credit_card_bank')!.valueChanges.pipe(
+            startWith(''),
+            map(value => {
+                const name = typeof value === 'string' ? value : value?.name;
+                return name ? this._listfilter(name as string) : this.banks?.slice();
+            }),
+        );
+
+        this.sub=merge(
+            this.form.get('credit_card_amount')!.valueChanges,
+            this.form.get('total_amount')!.valueChanges,
+          ).subscribe((res:any)=>{
+            this.computeCash()
+         })
         
     }
 
@@ -114,19 +142,19 @@ export class AddEditComponent implements OnInit {
         }
         
         this.submitting = true;
-        this.saveOrder()
-            .pipe(first())
-            .subscribe({
-                next: ( o: Order) => {
-                    this.alertService.success('Order saved', this.options);
-                    if(this.id) this.submitting = false;
-                    this.router.navigateByUrl('/orders/edit/'+o.id);
-                },
-                error: (error: string) => {
-                    this.alertService.error(error, this.options);
-                    this.submitting = false;
-                }
-            })
+        // this.saveOrder()
+        //     .pipe(first())
+        //     .subscribe({
+        //         next: ( o: Order) => {
+        //             this.alertService.success('Order saved', this.options);
+        //             if(this.id) this.submitting = false;
+        //             this.router.navigateByUrl('/orders/edit/'+o.id);
+        //         },
+        //         error: (error: string) => {
+        //             this.alertService.error(error, this.options);
+        //             this.submitting = false;
+        //         }
+        //     })
     }
 
     private saveOrder() {
@@ -193,6 +221,36 @@ export class AddEditComponent implements OnInit {
             })
           }
         });
-      }
+    }
+
+    computeCash() {
+        const cc_amount=+this.form.get('credit_card_amount')?.value;
+        const total_amount=+this.form.get('total_amount')?.value;
+        this.form.get('total_cash')?.setValue(total_amount-cc_amount);
+    }
+
+    loadBanks(){
+        this.bankService.getAllEnabled().subscribe(banks => {
+            this.banks = banks;
+        })
+    }
+
+    private _listfilter(name: string): Bank[] {
+        const filterValue = name.toLowerCase();
+        return this.banks.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    displayFn(bank: Bank): string {
+        return bank && bank.name ? bank.name : '';
+    }
+
+    updateCreditCard() {
+        console.log(this.form.get('credit_card')?.value);
+        if(!this.form.get('credit_card')?.value){
+            this.form.get('credit_card_amount')?.setValue(0);
+            this.form.get('credit_card_bank')?.setValue('');
+            this.form.get('credit_card_ref_num')?.setValue('');
+        }
+    }
 
 }

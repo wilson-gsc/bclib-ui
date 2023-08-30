@@ -1,5 +1,5 @@
-import { Status } from "./status";
-import { UOM } from "./uom";
+import { Status } from "../_helpers/enums/status";
+import { UOM } from "../_helpers/enums/uom";
 
 export class Product {
     id?: string;

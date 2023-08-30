@@ -1,4 +1,5 @@
-import { PaymentType } from "./payment-type";
+import { OrderType } from "../_helpers/enums/order-type";
+import { PaymentType } from "../_helpers/enums/payment-type";
 
 export class Order {
     id?: string;
@@ -10,5 +11,7 @@ export class Order {
         id?: string;
     };
     total_amount?: number;
-    payment_type?: PaymentType
+    payment_type?: PaymentType;
+    order_type?: OrderType;
+    total_cash?: number;
 }

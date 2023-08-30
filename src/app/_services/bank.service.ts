@@ -18,6 +18,10 @@ export class BankService {
         return this.http.get<Bank[]>(`${environment.apiUrl}/banks`);
     }
 
+    getAllEnabled() {
+        return this.http.get<Bank[]>(`${environment.apiUrl}/banks/enabled`);
+    }
+
     create(bank: Bank) {
         return this.http.post(`${environment.apiUrl}/banks`, bank);
     }

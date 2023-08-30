@@ -11,8 +11,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { filter, first, map, startWith } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
-import { Status } from '@app/_models/status';
-import { UOM } from '@app/_models/uom';
+import { Status } from '@app/_helpers/enums/status';
+import { UOM } from '@app/_helpers/enums/uom';
 import { AlertService } from '@app/_components/alert/alert.service';
 import { ProductInventoryService } from '@app/_services/product-inventory.service';
 import { Product } from '@app/_models';

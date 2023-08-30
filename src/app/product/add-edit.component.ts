@@ -10,8 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
-import { Status } from '@app/_models/status';
-import { UOM } from '@app/_models/uom';
+import { Status } from '@app/_helpers/enums/status';
+import { UOM } from '@app/_helpers/enums/uom';
 import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
@@ -54,7 +54,8 @@ export class AddEditComponent implements OnInit {
             description: [''],
             uom: [UOM.PC, Validators.required],
             status: [Status.ENABLED, Validators.required],
-            qty: [0]
+            qty: [0],
+            prices: [Validators.required],
         });
 
         this.title = 'Add Product';
@@ -65,6 +66,7 @@ export class AddEditComponent implements OnInit {
             this.productService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
+                    console.log(x);
                     this.form.patchValue(x);
                     this.loading = false;
                 });

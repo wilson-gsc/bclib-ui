@@ -10,11 +10,20 @@ mat-card {
     margin: 1%;
 }
 
+.mat-25 {
+    width: 23%;
+    margin: 1%;
+}
+
 .mat-50 {
     width: 48%;
     margin: 1%;
 }
 
+.full-width {
+    width: 53%;
+    margin: 1%;
+}
 
 /* list */
 
