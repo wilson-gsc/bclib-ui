@@ -5,11 +5,13 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Product</mat-label>
-                <span *ngIf="id">
+                <!-- <span *ngIf="id">
                     <input matInput disabled value="{{prodName}}">
-                </span>
-                <span *ngIf="!id">
-                    <input type="text"
+                </span> -->
+                <!-- <span *ngIf="!id">
+                    
+                </span> -->
+                <input type="text"
                         placeholder="Select..."
                         aria-label="Product"
                         [ngClass]="{ 'is-invalid': submitted && f.product.errors }"
@@ -17,7 +19,6 @@
                         [matAutocomplete]="auto"
                         formControlName="product"
                     >
-                </span>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{option.name}}

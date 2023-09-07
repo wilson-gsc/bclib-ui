@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { TableUtil } from '@app/_helpers/table.util';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Order } from '@app/_models/order';
 import { OrderService } from '@app/_services/order.service';
@@ -38,7 +38,7 @@ export class ListComponent implements OnInit {
     dataSource: any;
     displayedColumns: string[] = [
         'id', 'transaction_date', 'or_number', 'ordered_to', 
-        'total_amount', 'payment_type', 'order_type', 'action'];
+        'total_amount', 'payment_type', 'total_cash', 'credit_card_amount', 'order_type', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
@@ -86,10 +86,19 @@ export class ListComponent implements OnInit {
 
     onDateChange(event: any) {
         const selectedDate = event.value;
-        console.log(this.datePipe.transform(selectedDate, 'MM/dd/yyyy'));
         this.getAll(new Date(selectedDate))
         this.dataSource.filter = this.datePipe.transform(selectedDate, 'yyyy-MM-dd HH:mm:ss');
     }
     
+    getTotalAmount() {
+        return this.orders?.map(t => t.total_amount).reduce((acc: any, value) => acc + value, 0);    
+    }
 
+    getTotalCash() {
+        return this.orders?.map(t => t.total_cash).reduce((acc: any, value) => acc + value, 0);    
+    }
+
+    getTotalCC() {
+        return this.orders?.map(t => t.credit_card_amount).reduce((acc: any, value) => acc + value, 0);    
+    }
 }

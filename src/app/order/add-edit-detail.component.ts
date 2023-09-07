@@ -149,7 +149,7 @@ export class AddEditDetailComponent implements OnInit {
 
     private _listfilter(name: string): Product[] {
         const filterValue = name.toLowerCase();
-        return this.products.filter(option => option.name?.toLowerCase().includes(filterValue));
+        return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
     displayFn(product: Product): string {

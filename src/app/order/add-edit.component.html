@@ -68,13 +68,13 @@
                 <input type="text"
                         placeholder="Select..."
                         aria-label="Bank"
-                        [ngClass]="{ 'is-invalid': submitted && f.product.errors }"
+                        [ngClass]="{ 'is-invalid': submitted && f.credit_card_bank.errors }"
                         matInput
                         [matAutocomplete]="auto"
                         formControlName="credit_card_bank"
                     >
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
                     {{option.name}}
                 </mat-option>
                 </mat-autocomplete>
