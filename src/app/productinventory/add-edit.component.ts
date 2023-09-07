@@ -11,8 +11,6 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { filter, first, map, startWith } from 'rxjs/operators';
 
 import { ProductService } from '@app/_services';
-import { Status } from '@app/_helpers/enums/status';
-import { UOM } from '@app/_helpers/enums/uom';
 import { AlertService } from '@app/_components/alert/alert.service';
 import { ProductInventoryService } from '@app/_services/product-inventory.service';
 import { Product } from '@app/_models';
@@ -78,6 +76,7 @@ export class AddEditComponent implements OnInit {
             this.productInventoryService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
+                    console.log(x)
                     this.form.get('product')?.patchValue(x.product);
                     this.prodName = x.product?.name;
                     this.form.patchValue(x);
@@ -141,7 +140,7 @@ export class AddEditComponent implements OnInit {
 
     private _listfilter(name: string): Product[] {
         const filterValue = name.toLowerCase();
-        return this.products.filter(option => option.name?.toLowerCase().includes(filterValue));
+        return this.products?.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
     displayFn(product: Product): string {

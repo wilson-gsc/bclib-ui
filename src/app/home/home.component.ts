@@ -15,10 +15,6 @@ export class HomeComponent {
 
     constructor(private accountService: AccountService) {
         this.user = this.accountService.userValue;
-        this.test();
     }
-
-    test(){
-        console.log('HomeComponent...');
-    }
+    
 }

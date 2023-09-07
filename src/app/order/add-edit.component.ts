@@ -76,9 +76,9 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             or_number: [''],
-            ordered_to: ['', Validators.required],
-            address: ['', Validators.required],
-            business_name: ['', Validators.required],
+            ordered_to: [''],
+            address: [''],
+            business_name: [''],
             description: [''],
             payment_type: [PaymentType.CASH, Validators.required],
             total_amount: [0],
@@ -135,26 +135,26 @@ export class AddEditComponent implements OnInit {
 
         // reset alerts on submit
         this.alertService.clear();
-
+        
         // stop here if form is invalid
         if (this.form.invalid) {
             return;
         }
         
         this.submitting = true;
-        // this.saveOrder()
-        //     .pipe(first())
-        //     .subscribe({
-        //         next: ( o: Order) => {
-        //             this.alertService.success('Order saved', this.options);
-        //             if(this.id) this.submitting = false;
-        //             this.router.navigateByUrl('/orders/edit/'+o.id);
-        //         },
-        //         error: (error: string) => {
-        //             this.alertService.error(error, this.options);
-        //             this.submitting = false;
-        //         }
-        //     })
+        this.saveOrder()
+            .pipe(first())
+            .subscribe({
+                next: ( o: Order) => {
+                    this.alertService.success('Order saved', this.options);
+                    if(this.id) this.submitting = false;
+                    this.router.navigateByUrl('/orders/edit/'+o.id);
+                },
+                error: (error: string) => {
+                    this.alertService.error(error, this.options);
+                    this.submitting = false;
+                }
+            })
     }
 
     private saveOrder() {
@@ -240,8 +240,9 @@ export class AddEditComponent implements OnInit {
         return this.banks.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
-    displayFn(bank: Bank): string {
-        return bank && bank.name ? bank.name : '';
+    displayFn(bank: string): string {
+        return bank;
+        // return bank && bank.name ? bank.name : '';
     }
 
     updateCreditCard() {

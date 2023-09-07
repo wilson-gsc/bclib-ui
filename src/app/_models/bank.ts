@@ -5,4 +5,5 @@ export class Bank {
     name?: string;
     description?: string;
     status?: Status;
+    location?: string;
 }
