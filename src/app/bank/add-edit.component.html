@@ -17,14 +17,6 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Location</mat-label>
-                <input type="text" formControlName="location" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
-                <mat-error *ngIf="submitted && f.location.errors">
-                    <span *ngIf="f.location.errors.required">Location is required</span>
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="mat-50">
                 <mat-label>Status</mat-label>
                 <select matNativeControl required formControlName="status" matInput>
                     <option value="Enabled">Enabled</option>
