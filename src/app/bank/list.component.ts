@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
 
     banks?: Bank[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'name', 'description', 'location', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'description', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

@@ -25,16 +25,35 @@
                 <select matNativeControl required formControlName="payment_type" matInput>
                     <option value="CASH">CASH</option>
                     <option value="GCASH">GCASH</option>
-                    <option value="PAYMAYA">PAYMAYA</option>
+                    <option value="GRAB">GRAB</option>
+                    <option value="PANDA">PANDA</option>
                 </select>
                 <mat-error *ngIf="submitted && f.payment_type.errors">
                     <span *ngIf="f.payment_type.errors.required">Payment Type is required</span>
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="mat-25">
-                <mat-label>Total Cash</mat-label>
-                <input formControlName="total_cash" [value]="form.get('total_cash')?.value | currency:'PHP'" matInput readonly>
+            <mat-form-field class="mat-25" *ngIf="this.form.get('payment_type')?.value == 'CASH'">
+                <mat-label>Cash Amount</mat-label>
+                <input formControlName="cash_amount" [value]="form.get('cash_amount')?.value | currency:'PHP'" matInput readonly>
+            </mat-form-field>
+
+            <mat-form-field class="mat-25" *ngIf="this.form.get('payment_type')?.value == 'GCASH'">
+                <mat-label>GCash Amount</mat-label>
+                <input type="number" formControlName="gcash_amount" matInput 
+                    min="0" #input OnlyNumber="true">
+            </mat-form-field>
+
+            <mat-form-field class="mat-25" *ngIf="this.form.get('payment_type')?.value == 'GRAB'">
+                <mat-label>GRAB Amount</mat-label>
+                <input type="number" formControlName="grab_amount" matInput 
+                    min="0" #input OnlyNumber="true">
+            </mat-form-field>
+
+            <mat-form-field class="mat-25" *ngIf="this.form.get('payment_type')?.value == 'PANDA'">
+                <mat-label>PANDA Amount</mat-label>
+                <input type="number" formControlName="panda_amount" matInput 
+                    min="0" #input OnlyNumber="true">
             </mat-form-field>
 
             <mat-form-field class="mat-50">
@@ -42,15 +61,14 @@
                 <select matNativeControl required formControlName="order_type" matInput>
                     <option value="DINEIN">DINEIN</option>
                     <option value="PICKUP">PICKUP</option>
-                    <option value="DELIVERY GRAB">DELIVERY GRAB</option>
-                    <option value="DELIVERY PANDA">DELIVERY PANDA</option>
+                    <option value="DELIVERY">DELIVERY</option>
                 </select>
                 <mat-error *ngIf="submitted && f.order_type.errors">
                     <span *ngIf="f.order_type.errors.required">Order Type is required</span>
                 </mat-error>
             </mat-form-field>
 
-            <section class="full-width">
+            <section class="full-width" *ngIf="this.form.get('payment_type')?.value == 'CASH'">
                 <mat-checkbox formControlName="credit_card" (click)="updateCreditCard()">Credit Card</mat-checkbox>
             </section>
 

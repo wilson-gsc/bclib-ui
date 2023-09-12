@@ -55,16 +55,34 @@
                 <td mat-footer-cell *matFooterCellDef></td>
             </ng-container>
 
-            <ng-container matColumnDef="total_cash">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> Total Cash </th>
-                <td mat-cell *matCellDef="let element"> {{element.total_cash | currency:'PHP'}} </td>
+            <ng-container matColumnDef="cash_amount">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> Cash </th>
+                <td mat-cell *matCellDef="let element"> {{element.cash_amount | currency:'PHP'}} </td>
                 <td mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotalCash() | currency:'PHP'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="credit_card_amount">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> Credit Card Amount </th>
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> Credit Card </th>
                 <td mat-cell *matCellDef="let element"> {{element.credit_card_amount | currency:'PHP'}} </td>
                 <td mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotalCC() | currency:'PHP'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gcash_amount">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> GCash </th>
+                <td mat-cell *matCellDef="let element"> {{element.gcash_amount | currency:'PHP'}} </td>
+                <td mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotalGCash() | currency:'PHP'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="grab_amount">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> GRAB </th>
+                <td mat-cell *matCellDef="let element"> {{element.grab_amount | currency:'PHP'}} </td>
+                <td mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotalGrab() | currency:'PHP'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="panda_amount">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> PANDA </th>
+                <td mat-cell *matCellDef="let element"> {{element.panda_amount | currency:'PHP'}} </td>
+                <td mat-footer-cell *matFooterCellDef style="font-weight: bold;"> {{getTotalPanda() | currency:'PHP'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="order_type">
