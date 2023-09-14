@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { MatCardModule } from '@angular/material/card';
@@ -13,12 +13,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TableUtil } from '@app/_helpers/table.util';
 import { ProductInventory } from '@app/_models/product-inventory';
 import { ProductInventoryService } from '@app/_services/product-inventory.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     selector: 'product-inventory-list-component',
@@ -28,7 +30,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     imports: [
         RouterLink, NgFor, NgIf, CommonModule, ReactiveFormsModule,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
-        MatIconModule, MatDatepickerModule, MatNativeDateModule
+        MatIconModule, MatDatepickerModule, MatNativeDateModule, MatProgressSpinnerModule
     ],
     providers: [DatePipe]
 })
@@ -44,13 +46,48 @@ export class ListComponent implements OnInit {
     
     filterDate = new FormControl(new Date());
 
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
+
+    isLoading = false;
+    isDeleting = false;
+
     constructor(
         private productInventoryService: ProductInventoryService,
-        public datePipe: DatePipe
+        public datePipe: DatePipe,
+        private router: Router,
+        private alertService: AlertService
     ) {}
 
     ngOnInit() {
         this.getAll(new Date());
+    }
+
+    createBatch() {
+        this.isLoading = true;
+        this.saveBatch()
+            .pipe(first())
+            .subscribe({
+                next: () => {
+                    this.isLoading = false;
+                    this.alertService.success('Product Inventory Batch created', this.options);
+                    this.router.navigateByUrl('/product-inventories').then(() => {
+                        window.location.reload();
+                    });
+                },
+                error: (error: string) => {
+                    // this.alertService.error(error, this.options);
+                    // this.submitting = false;
+                }
+            }) 
+        
+    }
+
+    private saveBatch() {
+        // save batch
+        return this.productInventoryService.createBatch();
     }
 
     getAll(filterDate: any) {
@@ -90,6 +127,4 @@ export class ListComponent implements OnInit {
         this.getAll(new Date(selectedDate))
         this.dataSource.filter = this.datePipe.transform(selectedDate, 'yyyy-MM-dd HH:mm:ss');
     }
-    
-
 }

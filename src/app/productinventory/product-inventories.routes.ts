@@ -6,5 +6,6 @@ import { AddEditComponent } from './add-edit.component';
 export const PRODUCT_INVENTORIES_ROUTES: Routes = [
     { path: '', component: ListComponent },
     { path: 'add', component: AddEditComponent },
-    { path: 'edit/:id', component: AddEditComponent }
+    { path: 'edit/:id', component: AddEditComponent },
+    { path: 'batch-am', component: ListComponent },
 ];
