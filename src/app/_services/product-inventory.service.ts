@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { filter, map } from 'rxjs/operators';
+import { delay, filter, map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
 import { ProductInventory } from '@app/_models/product-inventory';
@@ -20,6 +20,12 @@ export class ProductInventoryService {
 
     create(productInventory: ProductInventory) {
         return this.http.post(`${environment.apiUrl}/product-inventory`, productInventory);
+    }
+
+    createBatch() {
+        return this.http.post(`${environment.apiUrl}/product-inventory/create-batch`, '').pipe(
+            delay(5000)
+        );
     }
 
     getById(id: string) {

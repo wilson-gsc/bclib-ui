@@ -40,4 +40,8 @@ export class ProductService {
                 return x;
             }));
     }
+
+    delete(id: string) {
+        return this.http.delete<Product>(`${environment.apiUrl}/products/delete/${id}`);
+    }
 }
