@@ -2,14 +2,13 @@
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
-    <span>AABBQ System</span>
+    <span>Benedicto College Library System</span>
     <span class="example-spacer"></span>
 
     <button routerLink="" mat-button>Home</button>
     
-    <button [matMenuTriggerFor]="inventory" mat-button>Inventory</button>
+    <!-- <button [matMenuTriggerFor]="inventory" mat-button>Inventory</button>
     <mat-menu #inventory="matMenu">
-        <!-- <button mat-menu-item>Item</button> -->
         <button mat-menu-item routerLink="/product-inventories">Product</button>
         <button mat-menu-item routerLink="/product-ins">Product In</button>
     </mat-menu>
@@ -17,7 +16,7 @@
     <button [matMenuTriggerFor]="sales" mat-button>Sales</button>
     <mat-menu #sales="matMenu">
         <button mat-menu-item routerLink="/orders">Order</button>
-    </mat-menu>
+    </mat-menu> -->
 
     <button [matMenuTriggerFor]="account" mat-button *ngIf="user"><mat-icon>account_circle</mat-icon>{{user.user?.username}}</button>
     <mat-menu #account="matMenu">
@@ -68,33 +67,36 @@
             <mat-list-item>
                 <button routerLink="/" mat-button><mat-icon>home</mat-icon>Home</button>
             </mat-list-item>
-            <div mat-subheader>Inventory</div>
+            <!-- <div mat-subheader>Inventory</div> -->
             <!-- <mat-list-item>
                 <button mat-button routerLink="" routerLinkActive="active"><mat-icon>inventory_2</mat-icon>Item</button>
             </mat-list-item> -->
-            <mat-list-item>
+            <!-- <mat-list-item>
                 <button mat-button routerLink="/product-inventories"><mat-icon>menu_book</mat-icon>Product</button>
-            </mat-list-item>
-            <mat-list-item>
+            </mat-list-item> -->
+            <!-- <mat-list-item>
                 <button mat-button routerLink="/product-ins"><mat-icon>add box icon</mat-icon>Product In</button>
-            </mat-list-item>
-            <div mat-subheader>Sales</div>
+            </mat-list-item> -->
+            <!-- <div mat-subheader>Sales</div>
             <mat-list-item>
                 <button mat-button routerLink="/orders"><mat-icon>restaurant</mat-icon>Order</button>
-            </mat-list-item>
+            </mat-list-item> -->
             <div mat-subheader>Settings</div>
             <mat-list-item>
                 <button mat-button routerLink="/users"><mat-icon>person</mat-icon>Users</button>
             </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/books" routerLinkActive="active"><mat-icon>library_books</mat-icon>Books</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/students" routerLinkActive="active"><mat-icon>person</mat-icon>Students</button>
+            </mat-list-item>
             <!-- <mat-list-item>
-                <button mat-button routerLink="/items" routerLinkActive="active"><mat-icon>category</mat-icon>Items</button>
-            </mat-list-item> -->
-            <mat-list-item>
                 <button mat-button routerLink="/banks"><mat-icon>account_balance</mat-icon>Banks</button>
-            </mat-list-item>
-            <mat-list-item>
+            </mat-list-item> -->
+            <!-- <mat-list-item>
                 <button mat-button routerLink="/products"><mat-icon>restaurant_menu</mat-icon>Products</button>
-            </mat-list-item>
+            </mat-list-item> -->
             <!-- <mat-list-item>
                 <button mat-button><mat-icon>settings</mat-icon>Settings</button>
             </mat-list-item> -->
@@ -109,7 +111,7 @@
             <router-outlet></router-outlet>
         </div>
         <footer>
-            <p>Copyright © 2023<a target="_blank" href="https://aabbq.org/">&nbsp;AABBQ</a>. All Rights Reserved</p>
+            <p>Copyright © 2023<a target="_blank" href="https://bclib.org/">&nbsp;BC</a>. All Rights Reserved</p>
         </footer>
     </mat-drawer-content>
     
