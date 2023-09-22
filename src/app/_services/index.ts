@@ -1,5 +1,4 @@
 export * from './account.service';
+export * from './book.service';
 export * from './alert.old.service';
-export * from './item.service';
-export * from './product.service';
-export * from './bank.service';
+export * from './student.service';
