@@ -4,10 +4,78 @@
         <mat-card-content>
 
             <mat-form-field class="mat-50">
+                <mat-label>Category</mat-label>
+                <input type="text"
+                        placeholder="Select..."
+                        aria-label="Category"
+                        [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
+                        matInput
+                        [matAutocomplete]="autoCat"
+                        formControlName="category"
+                    >
+                <mat-autocomplete autoActiveFirstOption #autoCat="matAutocomplete" [displayWith]="displayFnCat">
+                <mat-option *ngFor="let option of filteredOptionsCat | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="submitted && f.category.errors">
+                    <span *ngIf="f.category.errors.required">Category is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
                 <mat-label>Name</mat-label>
                 <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.name.errors">
                     <span *ngIf="f.name.errors.required">Name is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Author</mat-label>
+                <input type="text"
+                        placeholder="Select..."
+                        aria-label="Author"
+                        [ngClass]="{ 'is-invalid': submitted && f.author.errors }"
+                        matInput
+                        [matAutocomplete]="auto"
+                        formControlName="author"
+                    >
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="submitted && f.author.errors">
+                    <span *ngIf="f.author.errors.required">Author is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Publisher</mat-label>
+                <input type="text"
+                        placeholder="Select..."
+                        aria-label="Publisher"
+                        [ngClass]="{ 'is-invalid': submitted && f.author.errors }"
+                        matInput
+                        [matAutocomplete]="autoPub"
+                        formControlName="publisher"
+                    >
+                <mat-autocomplete autoActiveFirstOption #autoPub="matAutocomplete" [displayWith]="displayFnPub">
+                <mat-option *ngFor="let option of filteredOptionsPub | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="submitted && f.publisher.errors">
+                    <span *ngIf="f.publisher.errors.required">Publisher is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
+                <mat-label>Accession Book No.</mat-label>
+                <input type="text" formControlName="access_book_num" [ngClass]="{ 'is-invalid': submitted && f.access_book_num.errors }" matInput />
+                <mat-error *ngIf="submitted && f.access_book_num.errors">
+                    <span *ngIf="f.access_book_num.errors.required">Accession Book No. is required</span>
                 </mat-error>
             </mat-form-field>
 
@@ -35,7 +103,7 @@
                     <span *ngIf="id">Update</span>
                     <span *ngIf="!id">Save</span>
                 </button>
-                <a routerLink="/items" class="btn btn-link">Cancel</a>
+                <a routerLink="/books" class="btn btn-link">Cancel</a>
             </div>
         </mat-card-footer>
     </mat-card>

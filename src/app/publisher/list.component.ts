@@ -12,14 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { Publisher } from '@app/_models';
+import { PublisherService } from '@app/_services/publisher.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
+    selector: 'publisher-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['books.component.css'],
+    styleUrls: ['publishers.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -29,24 +29,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    books?: Book[];
+    publishers?: Publisher[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'name', 'author', 'publisher', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService) {}
+    constructor(private publisherService: PublisherService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getPublishers();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getPublishers() {
+        this.publisherService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(publishers => {
+                this.publishers = publishers;
+                this.dataSource = new MatTableDataSource<Publisher>(this.publishers);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -58,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("publishers", "Publishers");
     }
 }
