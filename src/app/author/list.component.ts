@@ -12,14 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { Author } from '@app/_models';
+import { AuthorService } from '@app/_services/author.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
+    selector: 'author-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['books.component.css'],
+    styleUrls: ['authors.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -29,24 +29,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    books?: Book[];
+    authors?: Author[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'name', 'author', 'publisher', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService) {}
+    constructor(private authorService: AuthorService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getAuthors();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getAuthors() {
+        this.authorService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(authors => {
+                this.authors = authors;
+                this.dataSource = new MatTableDataSource<Author>(this.authors);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -58,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("authors", "Authors");
     }
 }
