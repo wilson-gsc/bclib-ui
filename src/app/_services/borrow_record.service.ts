@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { Student } from '@app/_models';
+import { borrow_record } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
-export class StudentService {
+export class borrow_recordService {
 
     constructor(
         private router: Router,
@@ -15,22 +15,19 @@ export class StudentService {
     ) { }
 
     getAll() {
-        return this.http.get<Student[]>(`${environment.apiUrl}/students`);
-    }
-    getAllEnabled() {
-        return this.http.get<Student[]>(`${environment.apiUrl}/student/enabled`);
+        return this.http.get<borrow_record[]>(`${environment.apiUrl}/BorrowRecord`);
     }
 
-    create(student: Student) {
-        return this.http.post(`${environment.apiUrl}/students`, student);
+    create(borrow_record: borrow_record) {
+        return this.http.post(`${environment.apiUrl}/BorrowRecord`, borrow_record);
     }
 
     getById(id: string) {
-        return this.http.get<Student>(`${environment.apiUrl}/students/${id}`);
+        return this.http.get<borrow_record>(`${environment.apiUrl}/BorrowRecord/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/students/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/BorrowRecord/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));

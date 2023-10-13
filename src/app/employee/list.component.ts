@@ -12,14 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Student } from '@app/_models';
-import { StudentService } from '@app/_services/student.service';
+import { Employee } from '@app/_models';
+import { EmployeeService } from '@app/_services/employee.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'student-list-component',
+    selector: 'employee-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['students.component.css'],
+    styleUrls: ['employee.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -29,24 +29,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    students?: Student[];
+    employee?: Employee[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'full_name', 'year_level', 'course', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'employee_id', 'full_name', 'course', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private studentService: StudentService) {}
+    constructor(private employeeService: EmployeeService) {}
 
     ngOnInit() {
-        this.getStudents();
+        this.getEmployee();
     }
 
-    getStudents() {
-        this.studentService.getAll()
+    getEmployee() {
+        this.employeeService.getAll()
             .pipe(first())
-            .subscribe(students => {
-                this.students = students;
-                this.dataSource = new MatTableDataSource<Student>(this.students);
+            .subscribe(employee => {
+                this.employee = employee;
+                this.dataSource = new MatTableDataSource<Employee>(this.employee);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -58,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("students", "Students");
+        TableUtil.exportTableToExcel("employees", "Employees");
     }
 }//

@@ -22,14 +22,14 @@
                     <span *ngIf="f.category.errors.required">Category is required</span>
                 </mat-error>
             </mat-form-field>
-
+<!--
             <mat-form-field class="mat-50">
                 <mat-label>Name</mat-label>
                 <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.name.errors">
                     <span *ngIf="f.name.errors.required">Name is required</span>
                 </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field class="mat-50">
                 <mat-label>Author</mat-label>
@@ -80,18 +80,18 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Number</mat-label>
-                <input type="number" formControlName="number" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" matInput />
-                <mat-error *ngIf="submitted && f.number.errors">
-                    <span *ngIf="f.number.errors.required">number is required</span>
+                <mat-label>Author Number</mat-label>
+                <input type="text" formControlName="author_number" [ngClass]="{ 'is-invalid': submitted && f.author_number.errors }" matInput />
+                <mat-error *ngIf="submitted && f.author_number.errors">
+                    <span *ngIf="f.author_number.errors.required">Athor number is required</span>
                 </mat-error>
             </mat-form-field>
             
             <mat-form-field class="mat-50">
-                <mat-label>Class</mat-label>
-                <input type="text" formControlName="classs" [ngClass]="{ 'is-invalid': submitted && f.classs.errors }" matInput />
-                <mat-error *ngIf="submitted && f.classs.errors">
-                    <span *ngIf="f.classs.errors.required">Class is required</span>
+                <mat-label>Classification</mat-label>
+                <input type="text" formControlName="classification" [ngClass]="{ 'is-invalid': submitted && f.classification.errors }" matInput />
+                <mat-error *ngIf="submitted && f.classification.errors">
+                    <span *ngIf="f.classification.errors.required">Class is required</span>
                 </mat-error>
             </mat-form-field>
 
@@ -159,12 +159,12 @@
                 </mat-error>
             </mat-form-field>
        
-            
+            <!--
             <mat-form-field class="mat-50">
                 <mat-label>Description</mat-label>
                 <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
-
+            -->
             <mat-form-field class="mat-50">
                 <mat-label>Status</mat-label>
                 <select matNativeControl required formControlName="status" matInput>

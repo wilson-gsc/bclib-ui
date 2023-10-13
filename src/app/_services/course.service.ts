@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { Student } from '@app/_models';
+import { Course } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
-export class StudentService {
+export class CourseService {
 
     constructor(
         private router: Router,
@@ -15,22 +15,23 @@ export class StudentService {
     ) { }
 
     getAll() {
-        return this.http.get<Student[]>(`${environment.apiUrl}/students`);
-    }
-    getAllEnabled() {
-        return this.http.get<Student[]>(`${environment.apiUrl}/student/enabled`);
+        return this.http.get<Course[]>(`${environment.apiUrl}/course`);
     }
 
-    create(student: Student) {
-        return this.http.post(`${environment.apiUrl}/students`, student);
+    getAllEnabled() {
+        return this.http.get<Course[]>(`${environment.apiUrl}/course/enabled`);
+    }
+
+    create(course: Course) {
+        return this.http.post(`${environment.apiUrl}/course`, course);
     }
 
     getById(id: string) {
-        return this.http.get<Student>(`${environment.apiUrl}/students/${id}`);
+        return this.http.get<Course>(`${environment.apiUrl}/course/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/students/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/course/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));

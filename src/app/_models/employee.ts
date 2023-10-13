@@ -1,13 +1,11 @@
 import { Status } from "../_helpers/enums/status";
 
-export class Student {
+export class Employee {
     id?: string;
-    student_id?: string;
+    employee_id?: string;
     first_name?: string;
     last_name?: string;
     full_name?: string;
     course?: string;
-    year_level?: string;
-    enrollment_date?:Date;
     status?: Status;
 }

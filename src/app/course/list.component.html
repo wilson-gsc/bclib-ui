@@ -1,5 +1,5 @@
 <mat-card style="margin: 1%">
-    <h2 style="margin-top: 1%; margin-left: 1%;">Students</h2>
+    <h2 style="margin-top: 1%; margin-left: 1%;">Course</h2>
     <mat-card-header>
         <mat-form-field>
             <input matInput (keyup)="filterChange($event)" placeholder="Search here..."/>
@@ -15,21 +15,14 @@
                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
-
-            <ng-container matColumnDef="full_name">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> Full name </th>
-                <td mat-cell *matCellDef="let element"> {{element.full_name}} </td>
+            <ng-container matColumnDef="code">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef>Code </th>
+                <td mat-cell *matCellDef="let element"> {{element.code}} </td>
             </ng-container>
 
-            <ng-container matColumnDef="year_level">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef>Year level </th>
-                <td mat-cell *matCellDef="let element"> {{element.year_level}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="course">
-                <th mat-sort-header mat-header-cell *matHeaderCellDef> Course </th>
-                <td mat-cell *matCellDef="let element"> {{element.course?.name}} </td>
-                <td mat-footer-cell *matFooterCellDef></td>
+            <ng-container matColumnDef="name">
+                <th mat-sort-header mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="status">

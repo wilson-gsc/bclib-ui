@@ -58,14 +58,14 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            name: ['', Validators.required],
+          //  name: ['', Validators.required],
             author: ['', Validators.required],
             category: ['', Validators.required],
             publisher: ['', Validators.required],
             description: [''],
             access_book_num: [''],
-             number: [''],
-            classs: [''],
+            author_number: [''],
+            classification: [''],
             title: [''],
             edition: [''],
             volumes: [''],

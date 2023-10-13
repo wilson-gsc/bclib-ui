@@ -5,13 +5,13 @@ import { Publisher } from "./publisher";
 
 export class Book {
     id?: string;
-    name?: string;
+   // name?: string;
     description?: string;
     status?: Status;
     author?: Author;
     category?: Category;
-    number?: number;
-    classs?: string;
+    author_number?: string;
+    classification?: string;
     title?: string;
     edition?: string;
     volumes?: string;
