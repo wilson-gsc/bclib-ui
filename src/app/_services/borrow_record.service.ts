@@ -15,19 +15,19 @@ export class borrow_recordService {
     ) { }
 
     getAll() {
-        return this.http.get<borrow_record[]>(`${environment.apiUrl}/BorrowRecord`);
+        return this.http.get<borrow_record[]>(`${environment.apiUrl}/borrow-records`);
     }
 
     create(borrow_record: borrow_record) {
-        return this.http.post(`${environment.apiUrl}/BorrowRecord`, borrow_record);
+        return this.http.post(`${environment.apiUrl}/borrow-records`, borrow_record);
     }
 
     getById(id: string) {
-        return this.http.get<borrow_record>(`${environment.apiUrl}/BorrowRecord/${id}`);
+        return this.http.get<borrow_record>(`${environment.apiUrl}/borrow-records/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/BorrowRecord/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/borrow-records/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));

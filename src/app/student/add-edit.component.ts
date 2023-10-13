@@ -57,7 +57,7 @@ export class AddEditComponent implements OnInit {
             student_id: ['', Validators.required],
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
-            full_name: ['', Validators.required],
+            full_name: [''],
             course: ['', Validators.required],
             year_level: ['', Validators.required],
             enrollment_date: ['', Validators.required],

@@ -63,8 +63,12 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Year Level</mat-label>
-                <input type="text" formControlName="year_level"
-                    [ngClass]="{ 'is-invalid': submitted && f.year_level.errors }" matInput />
+                <select matNativeControl required formControlName="year_level" matInput>
+                    <option value="First">First</option>
+                    <option value="Second">Second</option>
+                    <option value="Third">Third</option>
+                    <option value="Fourth">Fourth</option>
+                </select>
                 <mat-error *ngIf="submitted && f.year_level.errors">
                     <span *ngIf="f.year_level.errors.required">Year level is required</span>
                 </mat-error>

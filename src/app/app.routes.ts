@@ -12,7 +12,7 @@ const authorsRoutes = () => import('./author/authors.routes').then(x => x.AUTHOR
 const publishersRoutes = () => import('./publisher/publishers.routes').then(x => x.PUBLISHERS_ROUTES);
 const courseRoutes = () => import('./course/course.routes').then(x => x.COURSE_ROUTES);
 const employeeRoutes = () => import('./employee/employee.routes').then(x => x.EMPLOYEE_ROUTES);
-const borrow_recordRoutes = () => import('./borrow_record/borrow_record.routes').then(x => x.BORROW_RECORD_ROUTES);
+const borrowRecordRoutes = () => import('./borrow_record/borrow_record.routes').then(x => x.BORROW_RECORD_ROUTES);
 
 export const APP_ROUTES: Routes = [
     { path: '', component: HomeComponent, canActivate: [authGuard] },
@@ -33,7 +33,7 @@ export const APP_ROUTES: Routes = [
 
    { path: 'employee', loadChildren: employeeRoutes, canActivate: [authGuard] },
 
-   { path: 'borrow_record', loadChildren: borrow_recordRoutes, canActivate: [authGuard] },
+   { path: 'borrow-records', loadChildren: borrowRecordRoutes, canActivate: [authGuard] },
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];
