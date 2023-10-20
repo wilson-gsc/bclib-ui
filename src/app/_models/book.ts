@@ -1,4 +1,5 @@
 import { Status } from "../_helpers/enums/status";
+import { Accession } from "./accession";
 import { Author } from "./author";
 import { Category } from "./category";
 import { Publisher } from "./publisher";
@@ -21,5 +22,6 @@ export class Book {
     year?: string;
     remarks?: string;
     publisher?: Publisher;
-    access_book_num?: string;
+    accession?:Accession;
+    number?:number;
 }

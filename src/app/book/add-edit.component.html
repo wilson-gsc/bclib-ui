@@ -4,6 +4,26 @@
         <mat-card-content>
 
             <mat-form-field class="mat-50">
+                <mat-label>Accession</mat-label>
+                <input type="text"
+                        placeholder="Select..."
+                        aria-label="Accession"
+                        [ngClass]="{ 'is-invalid': submitted && f.accession.errors }"
+                        matInput
+                        [matAutocomplete]="autoAcc"
+                        formControlName="accession"
+                    >
+                <mat-autocomplete autoActiveFirstOption #autoAcc="matAutocomplete" [displayWith]="displayFnAcc">
+                <mat-option *ngFor="let option of filteredOptionsAcc | async" [value]="option">
+                    {{option.name}}
+                </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="submitted && f.accession.errors">
+                    <span *ngIf="f.accession.errors.required">Acession is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
                 <mat-label>Category</mat-label>
                 <input type="text"
                         placeholder="Select..."
@@ -72,10 +92,10 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Accession Book No.</mat-label>
-                <input type="text" formControlName="access_book_num" [ngClass]="{ 'is-invalid': submitted && f.access_book_num.errors }" matInput />
-                <mat-error *ngIf="submitted && f.access_book_num.errors">
-                    <span *ngIf="f.access_book_num.errors.required">Accession Book No. is required</span>
+                <mat-label>Number</mat-label>
+                <input type="number" formControlName="number" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" matInput />
+                <mat-error *ngIf="submitted && f.number.errors">
+                    <span *ngIf="f.number.errors.required"> Number is required</span>
                 </mat-error>
             </mat-form-field>
 
@@ -137,7 +157,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Cost price</mat-label>
-                <input type="text" formControlName="cost_price" [ngClass]="{ 'is-invalid': submitted && f.cost_price.errors }" matInput />
+                <input type="number" formControlName="cost_price" [ngClass]="{ 'is-invalid': submitted && f.cost_price.errors }" matInput />
                 <mat-error *ngIf="submitted && f.cost_price.errors">
                     <span *ngIf="f.cost_price.errors.required">Cost price is required</span>
                 </mat-error>

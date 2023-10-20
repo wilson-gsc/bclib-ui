@@ -36,7 +36,7 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
 
-    course!: Course[];
+    courses!:Course[];
     filteredOptionsCur!: Observable<Course[]>;
 
     constructor(
@@ -62,7 +62,7 @@ export class AddEditComponent implements OnInit {
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
-        this.loadCourse();
+        this.loadCourses();
         this.title = 'Add Employee';
         if (this.id) {
             // edit mode
@@ -82,7 +82,7 @@ export class AddEditComponent implements OnInit {
             startWith(''),
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
-                return name ? this._listfilterCur(name as string) : this.course?.slice();
+                return name ? this._listfilterCur(name as string) : this.courses?.slice();
             }),
         );
 
@@ -124,19 +124,20 @@ export class AddEditComponent implements OnInit {
             : this.employeeService.create(this.form.value);
     }
     
-    /** Course */
-    loadCourse(){
-        this.CourseService.getAllEnabled().subscribe(Course => {
-            this.course = Course;
+     
+    /** Courses */
+    loadCourses(){
+        this.CourseService.getAllEnabled().subscribe(courses => {
+            this.courses = courses;
         })
     }
 
     private _listfilterCur(name: string): Course[] {
         const filterValue = name.toLowerCase();
-        return this.course?.filter(option => option.name?.toUpperCase().includes(filterValue));
+        return this.courses?.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
-    displayFnCur(Course: Course): string {
-        return Course && Course.name ? Course.name : '';
+    displayFnCur(course: Course): string {
+        return course && course.name ? course.name : '';
     }
 }

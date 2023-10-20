@@ -18,7 +18,7 @@ export class StudentService {
         return this.http.get<Student[]>(`${environment.apiUrl}/students`);
     }
     getAllEnabled() {
-        return this.http.get<Student[]>(`${environment.apiUrl}/student/enabled`);
+        return this.http.get<Student[]>(`${environment.apiUrl}/students/enabled`);
     }
 
     create(student: Student) {

@@ -7,4 +7,5 @@ export const CATEGORYS_ROUTES: Routes = [
     { path: '', component: ListComponent },
     { path: 'add', component: AddEditComponent },
     { path: 'edit/:id', component: AddEditComponent }
+    
 ];

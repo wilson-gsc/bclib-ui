@@ -19,7 +19,7 @@ export class EmployeeService {
     }
 
     getAllEnabled() {
-        return this.http.get<Employee[]>(`${environment.apiUrl}/employee/enabled`);
+        return this.http.get<Employee[]>(`${environment.apiUrl}/employees/enabled`);
     }
 
     create(Employee:Employee) {

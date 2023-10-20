@@ -31,7 +31,7 @@
                     <span *ngIf="f.last_name.errors.required">Last Name is required</span>
                 </mat-error>
             </mat-form-field>
-
+            <!--
             <mat-form-field class="mat-50">
                 <mat-label>Full name</mat-label>
                 <input type="text" formControlName="full_name"
@@ -40,7 +40,7 @@
                     <span *ngIf="f.full_name.errors.required">Full Name is required</span>
                 </mat-error>
             </mat-form-field>
-
+            -->
             <mat-form-field class="mat-50">
                 <mat-label>Course</mat-label>
                 <input type="text"
@@ -48,10 +48,10 @@
                         aria-label="Course"
                         [ngClass]="{ 'is-invalid': submitted && f.course.errors }"
                         matInput
-                        [matAutocomplete]="autocur"
+                        [matAutocomplete]="autoPub"
                         formControlName="course"
                     >
-                <mat-autocomplete autoActiveFirstOption #autocur="matAutocomplete" [displayWith]="displayFnCur">
+                <mat-autocomplete autoActiveFirstOption #autoPub="matAutocomplete" [displayWith]="displayFnCur">
                 <mat-option *ngFor="let option of filteredOptionsCur | async" [value]="option">
                     {{option.name}}
                 </mat-option>
@@ -62,18 +62,19 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Year Level</mat-label>
+                <mat-label>Year level</mat-label>
                 <select matNativeControl required formControlName="year_level" matInput>
-                    <option value="First">First</option>
-                    <option value="Second">Second</option>
-                    <option value="Third">Third</option>
-                    <option value="Fourth">Fourth</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
+                    <option value="Fourth Year">Fourth Year</option>
+                    <option value="Fifh Year">Fifh Year</option>
                 </select>
                 <mat-error *ngIf="submitted && f.year_level.errors">
                     <span *ngIf="f.year_level.errors.required">Year level is required</span>
                 </mat-error>
             </mat-form-field>
-
+            <!--
             <mat-form-field class="mat-50">
                 <mat-label>Enrollment Date</mat-label>
                 <input type="date" formControlName="enrollment_date"
@@ -81,7 +82,7 @@
                 <mat-error *ngIf="submitted && f.enrollment_date.errors">
                     <span *ngIf="f.enrollment_date.errors.required">Enrollment Date is required</span>
                 </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
 
 
             <mat-form-field class="mat-50">

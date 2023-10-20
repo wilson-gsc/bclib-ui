@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { first, map, startWith } from 'rxjs/operators';
 
 import { StudentService, AlertService, CourseService } from '@app/_services';
-import { Status } from '@app/_helpers/enums/status';
+import { Status, YearLevel } from '@app/_helpers/enums/status';
 import { Course } from '@app/_models';
 import { Observable } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -36,14 +36,13 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
 
-    course!: Course[];
+    courses!:Course[];
     filteredOptionsCur!: Observable<Course[]>;
-
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private studentService: StudentService,
+        private StudentService: StudentService,
         private alertService: AlertService,
         private CourseService: CourseService
 
@@ -59,18 +58,18 @@ export class AddEditComponent implements OnInit {
             last_name: ['', Validators.required],
             full_name: [''],
             course: ['', Validators.required],
-            year_level: ['', Validators.required],
-            enrollment_date: ['', Validators.required],
+            year_level: [YearLevel.FIFHYEAR, Validators.required],
+          //  enrollment_date: [''],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
-        this.loadCourse();
+        this.loadCourses();
         this.title = 'Add Student';
         if (this.id) {
             // edit mode
             this.title = 'Edit Student';
             this.loading = true;
-            this.studentService.getById(this.id)
+            this.StudentService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.get('course')?.patchValue(x.course);
@@ -79,15 +78,15 @@ export class AddEditComponent implements OnInit {
                 });
 
         }
+   
         /** Course filter */
         this.filteredOptionsCur = this.form.get('course')!.valueChanges.pipe(
             startWith(''),
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
-                return name ? this._listfilterCur(name as string) : this.course?.slice();
+                return name? this._listfilterCur(name as string) : this.courses?.slice();
             }),
         );
-
     }
 
     // convenience getter for easy access to form fields
@@ -103,7 +102,6 @@ export class AddEditComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
-
         this.submitting = true;
         this.saveStudent()
             .pipe(first())
@@ -122,23 +120,23 @@ export class AddEditComponent implements OnInit {
     private saveStudent() {
         // create or update student based on id param
         return this.id
-            ? this.studentService.update(this.id!, this.form.value)
-            : this.studentService.create(this.form.value);
+            ? this.StudentService.update(this.id!, this.form.value)
+            : this.StudentService.create(this.form.value);
     }
     
-    /** Course */
-    loadCourse(){
-        this.CourseService.getAllEnabled().subscribe(Course => {
-            this.course = Course;
+    /** Courses */
+    loadCourses(){
+        this.CourseService.getAllEnabled().subscribe(courses => {
+            this.courses = courses;
         })
     }
 
     private _listfilterCur(name: string): Course[] {
         const filterValue = name.toLowerCase();
-        return this.course?.filter(option => option.name?.toUpperCase().includes(filterValue));
+        return this.courses?.filter(option => option.name?.toLowerCase().includes(filterValue));
     }
 
-    displayFnCur(Course: Course): string {
-        return Course && Course.name ? Course.name : '';
+    displayFnCur(course: Course): string {
+        return course && course.name ? course.name : '';
     }
 }

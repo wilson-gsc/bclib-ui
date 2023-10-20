@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { borrow_record } from '@app/_models';
+import { BorrowersRecord } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
-export class borrow_recordService {
+export class BorrowersRecordService  {
 
     constructor(
         private router: Router,
@@ -15,19 +15,19 @@ export class borrow_recordService {
     ) { }
 
     getAll() {
-        return this.http.get<borrow_record[]>(`${environment.apiUrl}/borrow-records`);
+        return this.http.get<BorrowersRecord[]>(`${environment.apiUrl}/borrowers-record`);
     }
 
-    create(borrow_record: borrow_record) {
-        return this.http.post(`${environment.apiUrl}/borrow-records`, borrow_record);
+    create(BorrowersRecord: BorrowersRecord) {
+        return this.http.post(`${environment.apiUrl}/borrowers-record`, BorrowersRecord);
     }
 
     getById(id: string) {
-        return this.http.get<borrow_record>(`${environment.apiUrl}/borrow-records/${id}`);
+        return this.http.get<BorrowersRecord>(`${environment.apiUrl}/borrowers-record/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/borrow-records/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/borrowers-record/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));

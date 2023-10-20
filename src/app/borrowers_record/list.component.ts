@@ -12,14 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Student, borrow_record } from '@app/_models';
-import { borrow_recordService } from '@app/_services/borrow_record.service';
+import { Book } from '@app/_models';
+import { BorrowersRecordService } from '@app/_services/borrow_record.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'borrow_record-list-component',
+    selector: 'borrowers_record-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['borrow_record.component.css'],
+    styleUrls: ['borrowers_record.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -29,24 +29,24 @@ import { TableUtil } from '@app/_helpers/table.util';
 })
 export class ListComponent implements OnInit {
 
-    borrow_record?: Student[];
+    borrowers_record?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'student', 'employee', 'book', 'date_borrowed', 'date_returned', 'book_status', 'return_status','action'];
+    displayedColumns: string[] = ['id', 'student', 'employee', 'book', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private borrow_recordService: borrow_recordService) {}
+    constructor(private borrowersRecordService: BorrowersRecordService) {}
 
     ngOnInit() {
-        this.getBorrowRecord();
+        this.getBorrwersRecord();
     }
 
-    getBorrowRecord() {
-        this.borrow_recordService.getAll()
+    getBorrwersRecord() {
+        this.borrowersRecordService.getAll()
             .pipe(first())
-            .subscribe(borrow_record => {
-                this.borrow_record = borrow_record;
-                this.dataSource = new MatTableDataSource<borrow_record>(this.borrow_record);
+            .subscribe(borrowers_record => {
+                this.borrowers_record = borrowers_record;
+                this.dataSource = new MatTableDataSource<Book>(this.borrowers_record);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -58,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("borrow_record", "BorrowRecord");
+        TableUtil.exportTableToExcel("borrowers_record", "Books");
     }
-}//
+}

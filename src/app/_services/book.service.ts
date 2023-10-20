@@ -19,7 +19,7 @@ export class BookService {
     }
     
     getAllEnabled() {
-        return this.http.get<Book[]>(`${environment.apiUrl}/book/enabled`);
+        return this.http.get<Book[]>(`${environment.apiUrl}/books/enabled`);
     }
 
     create(book: Book) {
