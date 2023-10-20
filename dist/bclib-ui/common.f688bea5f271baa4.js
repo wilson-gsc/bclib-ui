@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkbclib_ui=self.webpackChunkbclib_ui||[]).push([[592],{4283:(c,t,i)=>{i.d(t,{D:()=>n,u:()=>e});var e=function(u){return u.User="User",u.Admin="Admin",u}(e||{}),n=function(u){return u.Student="Student",u.Employee="Employee",u}(n||{})}}]);

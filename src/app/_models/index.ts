@@ -7,4 +7,5 @@ export * from './publisher';
 export * from './course';
 export * from './employee';
 export * from './borrow_record';
+export * from './accession';
 

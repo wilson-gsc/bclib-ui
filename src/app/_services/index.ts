@@ -8,3 +8,4 @@ export * from './publisher.service';
 export * from './course.service';
 export * from './employee.service';
 export * from './borrow_record.service';
+export * from './accession.service';

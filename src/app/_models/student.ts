@@ -1,4 +1,5 @@
-import { Status } from "../_helpers/enums/status";
+import { Status, YearLevel } from "../_helpers/enums/status";
+import { Course } from "./course";
 
 export class Student {
     id?: string;
@@ -6,8 +7,8 @@ export class Student {
     first_name?: string;
     last_name?: string;
     full_name?: string;
-    course?: string;
-    year_level?: string;
-    enrollment_date?:Date;
+    course?: Course;
+    year_level?: YearLevel;
+   // enrollment_date?:Date;
     status?: Status;
 }

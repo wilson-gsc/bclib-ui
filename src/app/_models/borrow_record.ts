@@ -1,13 +1,16 @@
 import { Status } from "../_helpers/enums/status";
+import { Book } from "./book";
+import { Employee } from "./employee";
+import { Student } from "./student";
 
-export class borrow_record {
+export class BorrowersRecord {
     id?: string;
     borrower_type?: string;
-    student?: string;
-    employee?: string;
-    book?: string;
-    date_borrowed?: string;
-    date_returned?: string;
+    student?: Student;
+    employee?: Employee;
+    book?: Book;
+  //  date_borrowed?: string;
+   // date_returned?: string;
     remarks?: string;
     book_status?: string;
     return_status?:Date;
