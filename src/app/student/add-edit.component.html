@@ -68,13 +68,13 @@
                     <option value="Second Year">Second Year</option>
                     <option value="Third Year">Third Year</option>
                     <option value="Fourth Year">Fourth Year</option>
-                    <option value="Fifh Year">Fifh Year</option>
+                    <option value="Fifth Year">Fifth Year</option>
                 </select>
                 <mat-error *ngIf="submitted && f.year_level.errors">
                     <span *ngIf="f.year_level.errors.required">Year level is required</span>
                 </mat-error>
             </mat-form-field>
-            <!--
+          <!--
             <mat-form-field class="mat-50">
                 <mat-label>Enrollment Date</mat-label>
                 <input type="date" formControlName="enrollment_date"
@@ -82,8 +82,17 @@
                 <mat-error *ngIf="submitted && f.enrollment_date.errors">
                     <span *ngIf="f.enrollment_date.errors.required">Enrollment Date is required</span>
                 </mat-error>
-            </mat-form-field> -->
-
+            </mat-form-field> 
+            -->
+            <mat-form-field class="mat-50">
+                <mat-label>Enrollment Date</mat-label>
+                <input  [matDatepicker]="picker"  formControlName="enrollment_date"
+                [ngClass]="{ 'is-invalid': submitted && f.enrollment_date.errors }" matInput />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+           
 
             <mat-form-field class="mat-50">
                 <mat-label>Description</mat-label>

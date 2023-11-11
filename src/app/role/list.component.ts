@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf,CommonModule, DatePipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -12,44 +12,41 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BorrowersRecordService } from '@app/_services/borrow_record.service';
+import { Role } from '@app/_models';
+import { RoleService } from '@app/_services/role.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'borrowers_record-list-component',
+    selector: 'role-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['borrowers_record.component.css'],
+    styleUrls: ['role.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
-        MatIconModule, CommonModule
-    ], 
-    providers:[DatePipe]
+        MatIconModule
+    ]
 })
 export class ListComponent implements OnInit {
 
-    borrowers_record?: Book[];
+    role?: Role[];
     dataSource: any;
-    displayedColumns: string[] = ['id','student', 'employee', 'book', 'date_borrowed', 'date_returned', 'action'];
+    displayedColumns: string[] = ['id', 'role', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    
-    constructor(private borrowersRecordService: BorrowersRecordService) {}
-
+    constructor(private roleService: RoleService) {}
 
     ngOnInit() {
-        this.getBorrwersRecord();
+        this.getRoles();
     }
 
-    getBorrwersRecord() {
-        this.borrowersRecordService.getAll()
+    getRoles() {
+        this.roleService.getAll()
             .pipe(first())
-            .subscribe(borrowers_record => {
-                this.borrowers_record = borrowers_record;
-                this.dataSource = new MatTableDataSource<Book>(this.borrowers_record);
+            .subscribe(role => {
+                this.role = role;
+                this.dataSource = new MatTableDataSource<Role>(this.role);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -61,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("borrowers_record", "Books");
+        TableUtil.exportTableToExcel("role", "Roles");
     }
 }

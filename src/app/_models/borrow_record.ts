@@ -1,4 +1,4 @@
-import { Status } from "../_helpers/enums/status";
+import { BookStatus, ReturnStatus, Status } from "../_helpers/enums/status";
 import { Book } from "./book";
 import { Employee } from "./employee";
 import { Student } from "./student";
@@ -9,10 +9,9 @@ export class BorrowersRecord {
     student?: Student;
     employee?: Employee;
     book?: Book;
-  //  date_borrowed?: string;
-   // date_returned?: string;
+    date_borrowed?: Date;
+    date_returned?: Date;
     remarks?: string;
-    book_status?: string;
-    return_status?:Date;
-    status?: Status;
+    books_status?: BookStatus;
+    return_status?:ReturnStatus;
 }

@@ -9,16 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { AccountService } from '@app/_services';
-//import { Role } from '@app/_helpers/enums/role';
+import { RoleService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { AlertService } from '@app/_components/alert/alert.service';
-import { User } from '@app/_models/user';
+
 
 @Component({ 
-    selector: 'profile-component',
-    templateUrl: 'profile.component.html',
-    styleUrls: ['add-edit.component.css'],
+    templateUrl: 'add-edit.component.html',
+    styleUrls: ['role.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
@@ -26,46 +24,43 @@ import { User } from '@app/_models/user';
         MatSelectModule
     ]
 })
-export class ProfileComponent implements OnInit {
-    user?: User | null;
+export class AddEditComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;
     loading = false;
     submitting = false;
     submitted = false;
-    username = '';
-
-    options = {
-        autoClose: true,
-        keepAfterRouteChange: true
-    };
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
+        private roleService: RoleService,
         private alertService: AlertService
-    ) { 
-        this.accountService.user.subscribe(x => this.user = x);
-    }
+    ) { }
+    
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
 
     ngOnInit() {
-        console.log(this.user?.user)
-        this.id = this.user?.user?.id;
+        this.id = this.route.snapshot.params['id'];
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            // password only required in add mode
-            password: ['', [Validators.minLength(6), ...(!this.id ? [Validators.required] : [])]]
+            role: ['', Validators.required],
+            description: [''],
+            status: [Status.ENABLED, Validators.required]
         });
 
+        this.title = 'Add Role';
         if (this.id) {
             // edit mode
-            this.title = 'Profile';
+            this.title = 'Edit Role';
             this.loading = true;
-            this.accountService.getById(this.id)
+            this.roleService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
@@ -89,23 +84,24 @@ export class ProfileComponent implements OnInit {
         }
         
         this.submitting = true;
-        this.saveUser()
+        this.saveRole()
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('User saved', this.options);
-                    this.submitting = false;
-                    this.router.navigateByUrl('/users/profile/'+this.user?.user?.id);
+                    this.alertService.success('Role saved', this.options);
+                    this.router.navigateByUrl('/role');
                 },
-                error: error => {
-                    this.alertService.error(error, this.options);
+                error: (error: string) => {
+                    this.alertService.error(error), this.options;                    
                     this.submitting = false;
                 }
             })
     }
 
-    private saveUser() {
-        // update user based on id param
-        return this.accountService.update(this.id!, this.form.value)
+    private saveRole() {
+        // create or update role based on id param
+        return this.id
+            ? this.roleService.update(this.id!, this.form.value)
+            : this.roleService.create(this.form.value);
     }
 }

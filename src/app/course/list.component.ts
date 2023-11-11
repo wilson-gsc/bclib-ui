@@ -17,7 +17,7 @@ import { CourseService } from '@app/_services/course.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'publisher-list-component',
+    selector: 'course-list-component',
     templateUrl: 'list.component.html',
     styleUrls: ['course.component.css'],
     standalone: true,
@@ -27,6 +27,7 @@ import { TableUtil } from '@app/_helpers/table.util';
         MatIconModule
     ]
 })
+
 export class ListComponent implements OnInit {
 
     course?: Course[];
