@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgIf, NgClass } from '@angular/common';
+import { NgIf, NgClass, CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -7,21 +7,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { first } from 'rxjs/operators';
+import { first, map, startWith } from 'rxjs/operators';
 
-import { AccountService } from '@app/_services';
-import { Role } from '@app/_helpers/enums/role';
+import { AccountService, RoleService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { AlertService } from '@app/_components/alert/alert.service';
+import { Observable } from 'rxjs';
+import { Role } from '@app/_models/role';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
     styleUrls: ['add-edit.component.css'],
     standalone: true,
     imports: [
-        NgIf, ReactiveFormsModule, NgClass, RouterLink,
+        NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule
+        MatSelectModule, MatAutocompleteModule
     ]
 })
 export class AddEditComponent implements OnInit {
@@ -33,6 +35,9 @@ export class AddEditComponent implements OnInit {
     submitted = false;
     username = '';
 
+    roles!:Role[];
+    filteredOptionsRole!: Observable<Role[]>;
+
     options = {
         autoClose: true,
         keepAfterRouteChange: true
@@ -43,6 +48,7 @@ export class AddEditComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
+        private RoleService: RoleService,
         private alertService: AlertService
     ) { }
 
@@ -55,12 +61,12 @@ export class AddEditComponent implements OnInit {
             last_name: ['', Validators.required],
             username: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            role: [Role.User, Validators.required],
+            role: ['', Validators.required],
             status: [Status.ENABLED, Validators.required],
             // password only required in add mode
             password: ['', [Validators.minLength(6), ...(!this.id ? [Validators.required] : [])]]
         });
-
+        this.loadRoles();
         this.title = 'Add User';
         if (this.id) {
             // edit mode
@@ -74,6 +80,14 @@ export class AddEditComponent implements OnInit {
                     this.loading = false;
                 });
         }
+       /** Role filter */
+       this.filteredOptionsRole = this.form.get('role')!.valueChanges.pipe(
+        startWith(''),
+        map(value => {
+            const role = typeof value === 'string' ? value : value?.role;
+            return role ? this._listfilterRole(role as string) : this.roles?.slice();
+        }),
+    );
     }
 
     // convenience getter for easy access to form fields
@@ -111,4 +125,20 @@ export class AddEditComponent implements OnInit {
             ? this.accountService.update(this.id!, this.form.value)
             : this.accountService.register(this.form.value);
     }
+    /** Roles */
+    loadRoles(){
+        this.RoleService.getAllEnabled().subscribe(roles => {
+            this.roles = roles;
+        })
+    }
+
+    private _listfilterRole(role: string): Role[] {
+        const filterValue = role.toLowerCase();
+        return this.roles?.filter(option => option.role?.toLowerCase().includes(filterValue));
+    }
+
+    displayFnRole(role: Role): string {
+        return role && role.role ? role.role : '';
+    }
+
 }

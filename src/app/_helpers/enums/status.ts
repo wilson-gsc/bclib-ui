@@ -3,13 +3,19 @@ export enum Status {
     DISABLED = 'Disabled'
 }
 
+
+export enum BooksStatus {
+    NOTAVAILABLE = 'Not Available',
+    AVAILABLE = 'Available',
+}
+
 export enum borrower_type{
     STUDENT = 'Student',
     EMPLOYEE = 'Employee'
 }
 
 export enum BookStatus{
-    CHECKEDOUT = 'CheckedOut',
+    CHECKEDOUT = 'Checked Out',
     RETURN = 'returned'
 }
 
@@ -24,5 +30,6 @@ export enum YearLevel{
     SECONDYEAR = 'Second Year',
     THIRDYEAR = 'Third year',
     FOURTHYEAR = 'Fourth Year',
-    FIFHYEAR = 'fifh year',
+    FIFTHYEAR = 'fifth year',
 }
+

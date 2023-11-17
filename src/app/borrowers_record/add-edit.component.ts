@@ -10,11 +10,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { BorrowersRecordService, AlertService, StudentService, EmployeeService, BookService } from '@app/_services';
-import { BookStatus, ReturnStatus, Status } from '@app/_helpers/enums/status';
+import { BorrowersRecordService, StudentService, EmployeeService, BookService } from '@app/_services';
+import { BookStatus, BooksStatus, ReturnStatus, Status } from '@app/_helpers/enums/status';
 import { Observable } from 'rxjs';
 import { Student, Employee, Book } from '@app/_models';
 import { BorrowerType } from '@app/_helpers/enums/role';
+import { AlertService } from '@app/_components/alert/alert.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
@@ -23,7 +27,7 @@ import { BorrowerType } from '@app/_helpers/enums/role';
     imports: [
         NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule, MatAutocompleteModule
+        MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatIconModule
     ]
 })
 export class AddEditComponent implements OnInit {
@@ -53,7 +57,10 @@ export class AddEditComponent implements OnInit {
         private bookService: BookService,
         private alertService: AlertService
     ) { }
-
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
 
@@ -64,10 +71,9 @@ export class AddEditComponent implements OnInit {
             student: ['', Validators.required],
             employee: ['', Validators.required],
             book: ['', Validators.required],
-          /*  date_borrowed: [''],
-            date_returned: [''], */
+            date_returned: ['', Validators.required],
             remarks: [''],
-            book_status: [BookStatus.CHECKEDOUT, Validators.required],
+            books_status: [BookStatus.CHECKEDOUT, Validators.required],
             return_status: [ReturnStatus.GOOD, Validators.required],
         });
 
@@ -137,11 +143,11 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('BorrowersRecord saved', true);
-                    this.router.navigateByUrl('/borrowers_records');
+                    this.alertService.success('Borrowers Record saved', this.options);
+                    this.router.navigateByUrl('/borrowers-record');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error),this.options;
                     this.submitting = false;
                 }
             })

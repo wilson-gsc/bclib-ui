@@ -9,13 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { EmployeeService, AlertService, CourseService } from '@app/_services';
+import { EmployeeService,  CourseService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { Course } from '@app/_models';
 import { Observable } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { AlertService } from '@app/_components/alert/alert.service';
+
 
 
 @Component({
@@ -48,7 +50,10 @@ export class AddEditComponent implements OnInit {
         private CourseService: CourseService
 
     ) { }
-
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
 
@@ -107,11 +112,11 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Employee saved', true);
+                    this.alertService.success('Employee saved', this.options);
                     this.router.navigateByUrl('/employee');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error), this.options;
                     this.submitting = false;
                 }
             })
