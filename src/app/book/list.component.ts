@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -22,10 +22,11 @@ import { TableUtil } from '@app/_helpers/table.util';
     styleUrls: ['books.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf,
+        RouterLink, NgFor, NgIf, CommonModule,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
-    ]
+    ],
+    providers: [DatePipe]
 })
 export class ListComponent implements OnInit {
 
@@ -35,7 +36,8 @@ export class ListComponent implements OnInit {
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService) {}
+    constructor(private bookService: BookService,
+        public datePipe: DatePipe) {}
 
     ngOnInit() {
         this.getBooks();
