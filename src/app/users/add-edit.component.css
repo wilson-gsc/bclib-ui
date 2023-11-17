@@ -12,3 +12,9 @@ mat-card {
     width: 48%;
     margin: 1%;
 }
+
+.example-container {
+    height:500px;
+    overflow: auto;
+   
+}

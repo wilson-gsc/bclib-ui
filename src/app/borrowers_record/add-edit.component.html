@@ -204,7 +204,7 @@
                     <span *ngIf="f.year.errors.required">Year is required</span>
                 </mat-error>
             </mat-form-field>
-
+     
             <mat-form-field class="mat-50">
                 <mat-label>Remarks</mat-label>
                 <input type="text" formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }" matInput />
@@ -213,39 +213,64 @@
                 </mat-error>
             </mat-form-field>
        
-        
+          
             <mat-form-field class="mat-50">
                 <mat-label>Description</mat-label>
                 <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
-            -->
+           
+            <mat-form-field class="mat-50">
+                <mat-label>Date Borrowed</mat-label>
+                <input type="date" formControlName="date_borrowed"
+                    [ngClass]="{ 'is-invalid': submitted && f.date_borrowed.errors }" matInput />
+                <mat-error *ngIf="submitted && f.date_borrowed.errors">
+                    <span *ngIf="f.date_borrowed.errors.required">Date Borrowed is required</span>
+                </mat-error>
+            </mat-form-field>   
+
+            <mat-form-field class="mat-50">
+                <mat-label>Date returned</mat-label>
+                <input type="date" formControlName="date_returned"
+                    [ngClass]="{ 'is-invalid': submitted && f.date_returned.errors }" matInput />
+                <mat-error *ngIf="submitted && f.date_returned.errors">
+                    <span *ngIf="f.date_returned.errors.required">Date returned is required</span>
+                </mat-error>
+            </mat-form-field> -->
+
+            <mat-form-field class="mat-50">
+                <mat-label>Date returned</mat-label>
+                <input  [matDatepicker]="picker"  formControlName="date_returned"
+                [ngClass]="{ 'is-invalid': submitted && f.date_returned.errors }" matInput />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
             <mat-form-field class="mat-50">
                 <mat-label>Remarks</mat-label>
-                <input type="text" formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }" matInput />
-                <mat-error *ngIf="submitted && f.remarks.errors">
-                    <span *ngIf="f.remarks.errors.required">Remarks is required</span>
-                </mat-error>
+                <textarea formControlName="remarks" matInput></textarea>
             </mat-form-field>
+           
        
 
             <mat-form-field class="mat-50">
                 <mat-label>Book Status</mat-label>
-                <select matNativeControl required formControlName="book_status" matInput>
+                <select matNativeControl required formControlName="books_status" matInput>
                     <option value="Checked Out">Checked Out</option>
                     <option value="Returned">Returned</option>
                 </select>
-                <mat-error *ngIf="submitted && f.book_status.errors">
-                    <span *ngIf="f.book_status.errors.required">Status is required</span>
+                <mat-error *ngIf="submitted && f.books_status.errors">
+                    <span *ngIf="f.books_status.errors.required">Status is required</span>
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Book Status</mat-label>
+                <mat-label>Return Status</mat-label>
                 <select matNativeControl required formControlName="return_status" matInput>
                     <option value="Good">Good</option>
                     <option value="Damaged">Damaged</option>
                     <option value="Lost">Lost</option>
-                </select>
+                </select> 
                 <mat-error *ngIf="submitted && f.return_status.errors">
                     <span *ngIf="f.return_status.errors.required">Status is required</span>
                 </mat-error>

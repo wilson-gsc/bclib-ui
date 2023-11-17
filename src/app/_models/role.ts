@@ -1,9 +1,8 @@
 import { Status } from "../_helpers/enums/status";
 
-export class Course {
+export class Role {
     id?: string;
-    code?: string;
-    name?: string;
+    role?: string;
+    description?: string;
     status?: Status;
-    currentTime?: String;
 }

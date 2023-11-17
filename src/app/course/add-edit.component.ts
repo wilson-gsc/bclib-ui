@@ -31,13 +31,15 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
+    currentDateTime: Date = new Date();
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private CourseService: CourseService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        
     ) { }
     
     options = {

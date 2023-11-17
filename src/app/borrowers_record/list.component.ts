@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf,CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -24,18 +24,21 @@ import { TableUtil } from '@app/_helpers/table.util';
     imports: [
         RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
-        MatIconModule
-    ]
+        MatIconModule, CommonModule
+    ], 
+    providers:[DatePipe]
 })
 export class ListComponent implements OnInit {
 
     borrowers_record?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'student', 'employee', 'book', 'action'];
+    displayedColumns: string[] = ['id','student', 'employee', 'book', 'date_borrowed', 'date_returned', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
+    
     constructor(private borrowersRecordService: BorrowersRecordService) {}
+
 
     ngOnInit() {
         this.getBorrwersRecord();

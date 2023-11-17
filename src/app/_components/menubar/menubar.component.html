@@ -1,10 +1,10 @@
-<mat-toolbar color="primary" class="mat-elevation-z8">
+<mat-toolbar color="primary" class="mat-elevation-z8" class="sticky-toolbar" >
     <button (click)="drawer.toggle()" mat-icon-button>
         <mat-icon>menu</mat-icon>
     </button>
-    <span>Benedicto College Library System</span>
+    <span>Benedicto College Library System </span>
+    <span class="currentTime">Current Time: {{ currentTime | date:'hh:mm:ss a' }}</span>
     <span class="example-spacer"></span>
-
     <button routerLink="" mat-button>Home</button>
 
     <!-- <button [matMenuTriggerFor]="inventory" mat-button>Inventory</button>
@@ -62,11 +62,11 @@
         <mat-icon matBadge="15" [matBadgeHidden]="badgeVisible" matBadgeColor="warn">notifications</mat-icon>
     </button> -->
 </mat-toolbar>
-<mat-drawer-container>
+<mat-drawer-container class="sticky-container" >
     <mat-drawer #drawer opened="{{openDrawer}}" mode="side">
         <mat-nav-list>
             <mat-list-item>
-                <button routerLink="/" mat-button><mat-icon>home</mat-icon>Home</button>
+                <button class="button" routerLink="/" mat-button><mat-icon>home</mat-icon>Home</button>
             </mat-list-item>
             <mat-list-item>
                 <button mat-button routerLink="/books"
@@ -87,8 +87,13 @@
                 <button mat-button routerLink="/orders"><mat-icon>restaurant</mat-icon>Order</button>
             </mat-list-item> -->
             <div mat-subheader>Settings</div>
-            <mat-list-item>
+            <mat-list-item >
                 <button mat-button routerLink="/users"><mat-icon>person</mat-icon>Users</button>
+            </mat-list-item>
+
+            <mat-list-item>
+                <button mat-button routerLink="/role"
+                    routerLinkActive="active"><mat-icon>person</mat-icon>Users Role</button>
             </mat-list-item>
         
             <mat-list-item>
@@ -105,7 +110,7 @@
             </mat-list-item>
             <mat-list-item>
                 <button mat-button routerLink="/accessions"
-                    routerLinkActive="active"><mat-icon>book</mat-icon>Accession</button>
+                    routerLinkActive="active"><mat-icon>book</mat-icon>Accessions</button>
             </mat-list-item>
             <mat-list-item>
                 <button mat-button routerLink="/students"
@@ -113,17 +118,17 @@
             </mat-list-item>
             <mat-list-item>
                 <button mat-button routerLink="/course"
-                    routerLinkActive="active"><mat-icon>school</mat-icon>Course</button>
+                    routerLinkActive="active"><mat-icon>school</mat-icon>Courses</button>
             </mat-list-item>
 
             <mat-list-item>
                 <button mat-button routerLink="/employee"
-                    routerLinkActive="active"><mat-icon>people</mat-icon>Employee</button>
+                    routerLinkActive="active"><mat-icon>people</mat-icon>Employees</button>
             </mat-list-item>
 
             <mat-list-item>
                 <button mat-button routerLink="/borrowers-record"
-                    routerLinkActive="active"><mat-icon>collections_bookmark</mat-icon> Borrow Record</button>
+                    routerLinkActive="active"><mat-icon>collections_bookmark</mat-icon> Borrowers Record</button>
             </mat-list-item>
             <!-- <mat-list-it
              <mat-list-item>
@@ -140,8 +145,8 @@
             </mat-list-item>
         </mat-nav-list>
     </mat-drawer>
-    <mat-drawer-content>
-        <div style="min-height: 800px;">
+    <mat-drawer-content >
+        <div style="min-height: 500px;">
             <alert></alert>
             <router-outlet></router-outlet>
         </div>

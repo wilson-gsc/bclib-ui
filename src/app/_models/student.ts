@@ -9,6 +9,6 @@ export class Student {
     full_name?: string;
     course?: Course;
     year_level?: YearLevel;
-   // enrollment_date?:Date;
+    enrollment_date?:Date;
     status?: Status;
 }

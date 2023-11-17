@@ -1,4 +1,4 @@
-import { Status } from "../_helpers/enums/status";
+import { BooksStatus } from "../_helpers/enums/status";
 import { Accession } from "./accession";
 import { Author } from "./author";
 import { Category } from "./category";
@@ -8,7 +8,7 @@ export class Book {
     id?: string;
    // name?: string;
     description?: string;
-    status?: Status;
+    Book_status?: BooksStatus;
     author?: Author;
     category?: Category;
     author_number?: string;
