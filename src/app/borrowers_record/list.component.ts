@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -13,42 +13,40 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
 import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { BorrowersRecordService } from '@app/_services/borrow_record.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
+    selector: 'borrowers_record-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['books.component.css'],
+    styleUrls: ['borrowers_record.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf, CommonModule,
+        RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
-    ],
-    providers: [DatePipe]
+    ]
 })
 export class ListComponent implements OnInit {
 
-    books?: Book[];
+    borrowers_record?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'title', 'author', 'publisher', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'student', 'employee', 'book', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService,
-        public datePipe: DatePipe) {}
+    constructor(private borrowersRecordService: BorrowersRecordService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getBorrwersRecord();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getBorrwersRecord() {
+        this.borrowersRecordService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(borrowers_record => {
+                this.borrowers_record = borrowers_record;
+                this.dataSource = new MatTableDataSource<Book>(this.borrowers_record);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -60,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("borrowers_record", "Books");
     }
 }

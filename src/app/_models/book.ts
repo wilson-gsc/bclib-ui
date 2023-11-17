@@ -1,17 +1,18 @@
 import { Status } from "../_helpers/enums/status";
+import { Accession } from "./accession";
 import { Author } from "./author";
 import { Category } from "./category";
 import { Publisher } from "./publisher";
 
 export class Book {
     id?: string;
-    name?: string;
+   // name?: string;
     description?: string;
     status?: Status;
     author?: Author;
     category?: Category;
-    number?: number;
-    classs?: string;
+    author_number?: string;
+    classification?: string;
     title?: string;
     edition?: string;
     volumes?: string;
@@ -21,5 +22,6 @@ export class Book {
     year?: string;
     remarks?: string;
     publisher?: Publisher;
-    access_book_num?: string;
+    accession?:Accession;
+    number?:number;
 }

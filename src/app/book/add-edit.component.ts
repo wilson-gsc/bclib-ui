@@ -10,10 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { BookService, AlertService, AuthorService, CategoryService, PublisherService } from '@app/_services';
+import { BookService, AlertService, AuthorService, CategoryService, PublisherService, AccessionService} from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { Observable } from 'rxjs';
-import { Author, Category, Publisher } from '@app/_models';
+import { Accession, Author, Category, Publisher } from '@app/_models';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
@@ -42,6 +42,10 @@ export class AddEditComponent implements OnInit {
     publishers!:Publisher[];
     filteredOptionsPub!: Observable<Publisher[]>;
 
+    accessions!:Accession[];
+    filteredOptionsAcc!: Observable<Accession[]>;
+
+
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
@@ -50,6 +54,7 @@ export class AddEditComponent implements OnInit {
         private authorService: AuthorService,
         private categoryService: CategoryService,
         private publisherService: PublisherService,
+        private accessionService: AccessionService,
         private alertService: AlertService
     ) { }
 
@@ -58,20 +63,21 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            name: ['', Validators.required],
+          //  name: ['', Validators.required],
             author: ['', Validators.required],
             category: ['', Validators.required],
             publisher: ['', Validators.required],
+            accession: ['', Validators.required],
             description: [''],
-            access_book_num: [''],
-             number: [''],
-            classs: [''],
+            number: [0],
+            author_number: [''],
+            classification: [''],
             title: [''],
             edition: [''],
             volumes: [''],
             pages: [''],
             source_of_fund: [''],
-            cost_price: [''],
+            cost_price: [0],
             year: [''],
             remarks: [''],  
             status: [Status.ENABLED, Validators.required]
@@ -80,6 +86,7 @@ export class AddEditComponent implements OnInit {
         this.loadAuthors();
         this.loadCategories();
         this.loadPublishers();
+        this.loadAccessions();
 
         this.title = 'Add Book';
         if (this.id) {
@@ -120,6 +127,15 @@ export class AddEditComponent implements OnInit {
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
                 return name ? this._listfilterPub(name as string) : this.publishers?.slice();
+            }),
+        );
+
+         /** Accession ilter */
+         this.filteredOptionsAcc = this.form.get('accession')!.valueChanges.pipe(
+            startWith(''),
+            map(value => {
+                const name = typeof value === 'string' ? value : value?.name;
+                return name ? this._listfilterAcc(name as string) : this.accessions?.slice();
             }),
         );
     }
@@ -207,4 +223,23 @@ export class AddEditComponent implements OnInit {
     displayFnPub(publisher: Publisher): string {
         return publisher && publisher.name ? publisher.name : '';
     }
+
+    /** Accession */
+    loadAccessions(){
+        this.accessionService.getAllEnabled().subscribe(accessions => {
+            this.accessions = accessions;
+        })
+    }
+
+    private _listfilterAcc(name: string): Accession[] {
+        const filterValue = name.toLowerCase();
+        return this.accessions?.filter(option => option.name?.toLowerCase().includes(filterValue));
+    }
+
+    displayFnAcc(accession: Accession): string {
+        return accession && accession.name ? accession.name : '';
+    }
+    
+
+    
 }

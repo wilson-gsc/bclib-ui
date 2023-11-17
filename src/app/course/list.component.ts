@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -12,43 +12,42 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { Course} from '@app/_models';
+import { CourseService } from '@app/_services/course.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
+    selector: 'course-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['books.component.css'],
+    styleUrls: ['course.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf, CommonModule,
+        RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
-    ],
-    providers: [DatePipe]
+    ]
 })
 export class ListComponent implements OnInit {
 
-    books?: Book[];
+    course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'title', 'author', 'publisher', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'code', 'name', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService,
-        public datePipe: DatePipe) {}
+    constructor(private courseService: CourseService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getCourse();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getCourse() {
+        this.courseService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(course => {
+                this.course = course;
+                console.log(this.course);
+                this.dataSource = new MatTableDataSource<Course>(this.course);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -60,6 +59,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("course", "Course");
     }
 }

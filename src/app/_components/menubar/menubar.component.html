@@ -6,7 +6,7 @@
     <span class="example-spacer"></span>
 
     <button routerLink="" mat-button>Home</button>
-    
+
     <!-- <button [matMenuTriggerFor]="inventory" mat-button>Inventory</button>
     <mat-menu #inventory="matMenu">
         <button mat-menu-item routerLink="/product-inventories">Product</button>
@@ -18,12 +18,13 @@
         <button mat-menu-item routerLink="/orders">Order</button>
     </mat-menu> -->
 
-    <button [matMenuTriggerFor]="account" mat-button *ngIf="user"><mat-icon>account_circle</mat-icon>{{user.user?.username}}</button>
+    <button [matMenuTriggerFor]="account" mat-button
+        *ngIf="user"><mat-icon>account_circle</mat-icon>{{user.user?.username}}</button>
     <mat-menu #account="matMenu">
         <button mat-menu-item routerLink="/users/profile/{{user?.user?.id}}">Profile</button>
         <button mat-menu-item (click)="logout()">Logout</button>
     </mat-menu>
-    
+
     <!-- <button [matMenuTriggerFor]="lvl1master" routerLink="" mat-button>Master</button> -->
     <!-- <mat-menu #lvl1master="matMenu">
         <button [matMenuTriggerFor]="company" mat-menu-item>Company</button>
@@ -68,7 +69,8 @@
                 <button routerLink="/" mat-button><mat-icon>home</mat-icon>Home</button>
             </mat-list-item>
             <mat-list-item>
-                <button mat-button routerLink="/books" routerLinkActive="active"><mat-icon>library_books</mat-icon>Books</button>
+                <button mat-button routerLink="/books"
+                    routerLinkActive="active"><mat-icon>library_books</mat-icon>Books</button>
             </mat-list-item>
             <!-- <div mat-subheader>Inventory</div> -->
             <!-- <mat-list-item>
@@ -88,19 +90,43 @@
             <mat-list-item>
                 <button mat-button routerLink="/users"><mat-icon>person</mat-icon>Users</button>
             </mat-list-item>
+        
             <mat-list-item>
-                <button mat-button routerLink="/categorys" routerLinkActive="active"><mat-icon>category</mat-icon>Categories</button>
+                <button mat-button routerLink="/categorys"
+                    routerLinkActive="active"><mat-icon>category</mat-icon>Categories</button>
             </mat-list-item>
             <mat-list-item>
-                <button mat-button routerLink="/authors" routerLinkActive="active"><mat-icon>person_outline</mat-icon>Authors</button>
+                <button mat-button routerLink="/authors"
+                    routerLinkActive="active"><mat-icon>person_outline</mat-icon>Authors</button>
             </mat-list-item>
             <mat-list-item>
-                <button mat-button routerLink="/publishers" routerLinkActive="active"><mat-icon>publish</mat-icon>Publishers</button>
+                <button mat-button routerLink="/publishers"
+                    routerLinkActive="active"><mat-icon>publish</mat-icon>Publishers</button>
             </mat-list-item>
             <mat-list-item>
-                <button mat-button routerLink="/students" routerLinkActive="active"><mat-icon>person</mat-icon>Students</button>
+                <button mat-button routerLink="/accessions"
+                    routerLinkActive="active"><mat-icon>book</mat-icon>Accession</button>
             </mat-list-item>
-            <!-- <mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/students"
+                    routerLinkActive="active"><mat-icon>person</mat-icon>Students</button>
+            </mat-list-item>
+            <mat-list-item>
+                <button mat-button routerLink="/course"
+                    routerLinkActive="active"><mat-icon>school</mat-icon>Course</button>
+            </mat-list-item>
+
+            <mat-list-item>
+                <button mat-button routerLink="/employee"
+                    routerLinkActive="active"><mat-icon>people</mat-icon>Employee</button>
+            </mat-list-item>
+
+            <mat-list-item>
+                <button mat-button routerLink="/borrowers-record"
+                    routerLinkActive="active"><mat-icon>collections_bookmark</mat-icon> Borrow Record</button>
+            </mat-list-item>
+            <!-- <mat-list-it
+             <mat-list-item>
                 <button mat-button routerLink="/banks"><mat-icon>account_balance</mat-icon>Banks</button>
             </mat-list-item> -->
             <!-- <mat-list-item>
@@ -123,5 +149,5 @@
             <p>Copyright © 2023<a target="_blank" href="https://bclib.org/">&nbsp;BC</a>. All Rights Reserved</p>
         </footer>
     </mat-drawer-content>
-    
+
 </mat-drawer-container>

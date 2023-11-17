@@ -6,8 +6,8 @@ import { User } from '@app/_models';
 import { AccountService } from '@app/_services';
 
 @Component({ 
-    templateUrl: './home.component.html', 
-    styleUrls: ['./home.component.css'],
+    templateUrl: 'home.component.html', 
+    styleUrls: ['home.component.css'],
     standalone: true,
     imports: [MatCardModule],
 })

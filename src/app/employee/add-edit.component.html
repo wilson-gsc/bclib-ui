@@ -6,11 +6,11 @@
         <mat-card-content>
 
             <mat-form-field class="mat-50">
-                <mat-label>Student ID</mat-label>
-                <input type="text" formControlName="student_id"
-                    [ngClass]="{ 'is-invalid': submitted && f.student_id.errors }" matInput />
-                <mat-error *ngIf="submitted && f.student_id.errors">
-                    <span *ngIf="f.student_id.errors.required">Student ID is required</span>
+                <mat-label>Employee ID</mat-label>
+                <input type="text" formControlName="employee_id"
+                    [ngClass]="{ 'is-invalid': submitted && f.employee_id.errors }" matInput />
+                <mat-error *ngIf="submitted && f.employee_id.errors">
+                    <span *ngIf="f.employee_id.errors.required">Employee ID is required</span>
                 </mat-error>
             </mat-form-field>
 
@@ -48,10 +48,10 @@
                         aria-label="Course"
                         [ngClass]="{ 'is-invalid': submitted && f.course.errors }"
                         matInput
-                        [matAutocomplete]="autoPub"
+                        [matAutocomplete]="autocur"
                         formControlName="course"
                     >
-                <mat-autocomplete autoActiveFirstOption #autoPub="matAutocomplete" [displayWith]="displayFnCur">
+                <mat-autocomplete autoActiveFirstOption #autocur="matAutocomplete" [displayWith]="displayFnCur">
                 <mat-option *ngFor="let option of filteredOptionsCur | async" [value]="option">
                     {{option.name}}
                 </mat-option>
@@ -61,35 +61,12 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="mat-50">
-                <mat-label>Year level</mat-label>
-                <select matNativeControl required formControlName="year_level" matInput>
-                    <option value="First Year">First Year</option>
-                    <option value="Second Year">Second Year</option>
-                    <option value="Third Year">Third Year</option>
-                    <option value="Fourth Year">Fourth Year</option>
-                    <option value="Fifh Year">Fifh Year</option>
-                </select>
-                <mat-error *ngIf="submitted && f.year_level.errors">
-                    <span *ngIf="f.year_level.errors.required">Year level is required</span>
-                </mat-error>
-            </mat-form-field>
             <!--
-            <mat-form-field class="mat-50">
-                <mat-label>Enrollment Date</mat-label>
-                <input type="date" formControlName="enrollment_date"
-                    [ngClass]="{ 'is-invalid': submitted && f.enrollment_date.errors }" matInput />
-                <mat-error *ngIf="submitted && f.enrollment_date.errors">
-                    <span *ngIf="f.enrollment_date.errors.required">Enrollment Date is required</span>
-                </mat-error>
-            </mat-form-field> -->
-
-
             <mat-form-field class="mat-50">
                 <mat-label>Description</mat-label>
                 <textarea formControlName="description" matInput></textarea>
             </mat-form-field>
-
+            -->
             <mat-form-field class="mat-50">
                 <mat-label>Status</mat-label>
                 <select matNativeControl required formControlName="status" matInput>
@@ -109,7 +86,7 @@
                     <span *ngIf="id">Update</span>
                     <span *ngIf="!id">Save</span>
                 </button>
-                <a routerLink="/students" class="btn btn-link">Cancel</a>
+                <a routerLink="/employee" class="btn btn-link">Cancel</a>
             </div>
         </mat-card-footer>
     </mat-card>

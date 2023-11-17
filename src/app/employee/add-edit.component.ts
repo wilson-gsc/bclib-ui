@@ -9,8 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { StudentService, AlertService, CourseService } from '@app/_services';
-import { Status, YearLevel } from '@app/_helpers/enums/status';
+import { EmployeeService, AlertService, CourseService } from '@app/_services';
+import { Status } from '@app/_helpers/enums/status';
 import { Course } from '@app/_models';
 import { Observable } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -20,7 +20,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 
 @Component({
     templateUrl: 'add-edit.component.html',
-    styleUrls: ['students.component.css'],
+    styleUrls: ['employee.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, CommonModule, RouterLink,
@@ -38,11 +38,12 @@ export class AddEditComponent implements OnInit {
 
     courses!:Course[];
     filteredOptionsCur!: Observable<Course[]>;
+
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private StudentService: StudentService,
+        private employeeService: EmployeeService,
         private alertService: AlertService,
         private CourseService: CourseService
 
@@ -53,23 +54,21 @@ export class AddEditComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            student_id: ['', Validators.required],
+            employee_id: ['', Validators.required],
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
             full_name: [''],
             course: ['', Validators.required],
-            year_level: [YearLevel.FIFHYEAR, Validators.required],
-          //  enrollment_date: [''],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
         this.loadCourses();
-        this.title = 'Add Student';
+        this.title = 'Add Employee';
         if (this.id) {
             // edit mode
-            this.title = 'Edit Student';
+            this.title = 'Edit Employee';
             this.loading = true;
-            this.StudentService.getById(this.id)
+            this.employeeService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
                     this.form.get('course')?.patchValue(x.course);
@@ -78,15 +77,15 @@ export class AddEditComponent implements OnInit {
                 });
 
         }
-   
         /** Course filter */
         this.filteredOptionsCur = this.form.get('course')!.valueChanges.pipe(
             startWith(''),
             map(value => {
                 const name = typeof value === 'string' ? value : value?.name;
-                return name? this._listfilterCur(name as string) : this.courses?.slice();
+                return name ? this._listfilterCur(name as string) : this.courses?.slice();
             }),
         );
+
     }
 
     // convenience getter for easy access to form fields
@@ -102,13 +101,14 @@ export class AddEditComponent implements OnInit {
         if (this.form.invalid) {
             return;
         }
+
         this.submitting = true;
-        this.saveStudent()
+        this.saveEmployee()
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Student saved', true);
-                    this.router.navigateByUrl('/students');
+                    this.alertService.success('Employee saved', true);
+                    this.router.navigateByUrl('/employee');
                 },
                 error: (error: string) => {
                     this.alertService.error(error);
@@ -117,13 +117,14 @@ export class AddEditComponent implements OnInit {
             })
     }
 
-    private saveStudent() {
-        // create or update student based on id param
+    private saveEmployee() {
+        // create or update employee based on id param
         return this.id
-            ? this.StudentService.update(this.id!, this.form.value)
-            : this.StudentService.create(this.form.value);
+            ? this.employeeService.update(this.id!, this.form.value)
+            : this.employeeService.create(this.form.value);
     }
     
+     
     /** Courses */
     loadCourses(){
         this.CourseService.getAllEnabled().subscribe(courses => {

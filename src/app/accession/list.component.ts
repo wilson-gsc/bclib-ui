@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -12,43 +12,41 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { Accession } from '@app/_models';
+import { AccessionService } from '@app/_services/accession.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
+    selector: 'accession-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['books.component.css'],
+    styleUrls: ['accession.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf, CommonModule,
+        RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
-    ],
-    providers: [DatePipe]
+    ]
 })
 export class ListComponent implements OnInit {
 
-    books?: Book[];
+    accessions?: Accession[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'title', 'author', 'publisher', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'name', 'code', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService,
-        public datePipe: DatePipe) {}
+    constructor(private accessionService: AccessionService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getAccessions();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getAccessions() {
+        this.accessionService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(accessions => {
+                this.accessions = accessions;
+                this.dataSource = new MatTableDataSource<Accession>(this.accessions);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -60,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("accessions", "Accessions");
     }
 }

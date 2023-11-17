@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@app/environments/environment';
-import { Book } from '@app/_models';
+import { Accession } from '@app/_models';
 
 @Injectable({ providedIn: 'root' })
-export class BookService {
+export class AccessionService {
 
     constructor(
         private router: Router,
@@ -15,23 +15,23 @@ export class BookService {
     ) { }
 
     getAll() {
-        return this.http.get<Book[]>(`${environment.apiUrl}/books`);
-    }
-    
-    getAllEnabled() {
-        return this.http.get<Book[]>(`${environment.apiUrl}/books/enabled`);
+        return this.http.get<Accession[]>(`${environment.apiUrl}/accessions`);
     }
 
-    create(book: Book) {
-        return this.http.post(`${environment.apiUrl}/books`, book);
+    getAllEnabled() {
+        return this.http.get<Accession[]>(`${environment.apiUrl}/accessions/enabled`);
+    }
+
+    create(accession: Accession) {
+        return this.http.post(`${environment.apiUrl}/accessions`,accession);
     }
 
     getById(id: string) {
-        return this.http.get<Book>(`${environment.apiUrl}/books/${id}`);
+        return this.http.get<Accession>(`${environment.apiUrl}/accessions/${id}`);
     }
 
     update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/books/${id}`, params)
+        return this.http.put(`${environment.apiUrl}/accessions/${id}`, params)
             .pipe(map(x => {
                 return x;
             }));
