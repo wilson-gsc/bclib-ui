@@ -12,14 +12,14 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Course} from '@app/_models';
-import { CourseService } from '@app/_services/course.service';
+import { Role } from '@app/_models';
+import { RoleService } from '@app/_services/role.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'course-list-component',
+    selector: 'role-list-component',
     templateUrl: 'list.component.html',
-    styleUrls: ['course.component.css'],
+    styleUrls: ['role.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
@@ -27,28 +27,26 @@ import { TableUtil } from '@app/_helpers/table.util';
         MatIconModule
     ]
 })
-
 export class ListComponent implements OnInit {
 
-    course?: Course[];
+    role?: Role[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'code', 'name', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'role', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private courseService: CourseService) {}
+    constructor(private roleService: RoleService) {}
 
     ngOnInit() {
-        this.getCourse();
+        this.getRoles();
     }
 
-    getCourse() {
-        this.courseService.getAll()
+    getRoles() {
+        this.roleService.getAll()
             .pipe(first())
-            .subscribe(course => {
-                this.course = course;
-                console.log(this.course);
-                this.dataSource = new MatTableDataSource<Course>(this.course);
+            .subscribe(role => {
+                this.role = role;
+                this.dataSource = new MatTableDataSource<Role>(this.role);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -60,6 +58,6 @@ export class ListComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("course", "Course");
+        TableUtil.exportTableToExcel("role", "Roles");
     }
 }

@@ -45,13 +45,34 @@
                     <span *ngIf="f.email.errors.required">Email is required</span>
                 </mat-error>
             </mat-form-field>
-
+            <!--
             <mat-form-field class="mat-50">
                 <mat-label>Role</mat-label>
                 <select matNativeControl required formControlName="role" matInput>
                     <option value="User">User</option>
                     <option value="Admin">Admin</option>
                 </select>
+                <mat-error *ngIf="submitted && f.role.errors">
+                    <span *ngIf="f.role.errors.required">Role is required</span>
+                </mat-error>
+            </mat-form-field>
+             -->
+
+             <mat-form-field class="mat-50">
+                <mat-label>Role</mat-label>
+                <input type="text"
+                        placeholder="Select..."
+                        aria-label="Role"
+                        [ngClass]="{ 'is-invalid': submitted && f.role.errors }"
+                        matInput
+                        [matAutocomplete]="autoRole"
+                        formControlName="role"
+                    >
+                <mat-autocomplete autoActiveFirstOption #autoRole="matAutocomplete" [displayWith]="displayFnRole">
+                <mat-option *ngFor="let option of filteredOptionsRole | async" [value]="option">
+                    {{option.role}}
+                </mat-option>
+                </mat-autocomplete>
                 <mat-error *ngIf="submitted && f.role.errors">
                     <span *ngIf="f.role.errors.required">Role is required</span>
                 </mat-error>

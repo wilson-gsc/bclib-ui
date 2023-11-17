@@ -3,7 +3,7 @@
         <mat-card-header><h2 style="margin-top: 1%; margin-left: 1%;">{{title}}</h2></mat-card-header>
         <mat-card-content>
 
-            <mat-form-field class="mat-50">
+            <mat-form-field class="mat-50 ">
                 <mat-label>Accession</mat-label>
                 <input type="text"
                         placeholder="Select..."
@@ -101,6 +101,7 @@
                 </mat-error>
             </mat-form-field>
 
+
             <mat-form-field class="mat-50">
                 <mat-label>Author Number</mat-label>
                 <input type="text" formControlName="author_number" [ngClass]="{ 'is-invalid': submitted && f.author_number.errors }" matInput />
@@ -188,13 +189,13 @@
             </mat-form-field>
             -->
             <mat-form-field class="mat-50">
-                <mat-label>Status</mat-label>
-                <select matNativeControl required formControlName="status" matInput>
-                    <option value="Enabled">Enabled</option>
-                    <option value="Disabled">Disabled</option>
+                <mat-label>Book Status</mat-label>
+                <select matNativeControl required formControlName="book_status" matInput>
+                    <option value="Available">Available</option>
+                    <option value="Not Available">Not Available</option>
                 </select>
-                <mat-error *ngIf="submitted && f.status.errors">
-                    <span *ngIf="f.status.errors.required">Status is required</span>
+                <mat-error *ngIf="submitted && f.book_status.errors">
+                    <span *ngIf="f.book_status.errors.required">Book status is required</span>
                 </mat-error>
             </mat-form-field>
 

@@ -9,13 +9,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { StudentService, AlertService, CourseService } from '@app/_services';
+import { StudentService, CourseService } from '@app/_services';
 import { Status, YearLevel } from '@app/_helpers/enums/status';
 import { Course } from '@app/_models';
 import { Observable } from 'rxjs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { AlertService } from '@app/_components/alert/alert.service';
+
 
 
 @Component({
@@ -48,6 +50,11 @@ export class AddEditComponent implements OnInit {
 
     ) { }
 
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
+
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
 
@@ -58,11 +65,12 @@ export class AddEditComponent implements OnInit {
             last_name: ['', Validators.required],
             full_name: [''],
             course: ['', Validators.required],
-            year_level: [YearLevel.FIFHYEAR, Validators.required],
-          //  enrollment_date: [''],
+            year_level: [YearLevel.FIRSTYEAR, Validators.required],
+            enrollment_date: [''],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
+       
         this.loadCourses();
         this.title = 'Add Student';
         if (this.id) {
@@ -107,11 +115,11 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Student saved', true);
+                    this.alertService.success('Student saved', this.options);
                     this.router.navigateByUrl('/students');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error), this.options;
                     this.submitting = false;
                 }
             })

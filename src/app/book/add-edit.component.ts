@@ -10,10 +10,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
-import { BookService, AlertService, AuthorService, CategoryService, PublisherService, AccessionService} from '@app/_services';
-import { Status } from '@app/_helpers/enums/status';
+import { BookService, AuthorService, CategoryService, PublisherService, AccessionService} from '@app/_services';
+import { BooksStatus, Status } from '@app/_helpers/enums/status';
 import { Observable } from 'rxjs';
 import { Accession, Author, Category, Publisher } from '@app/_models';
+import { AlertService } from '@app/_components/alert/alert.service';
 
 @Component({ 
     templateUrl: 'add-edit.component.html',
@@ -57,6 +58,10 @@ export class AddEditComponent implements OnInit {
         private accessionService: AccessionService,
         private alertService: AlertService
     ) { }
+    options = {
+        autoClose: true,
+        keepAfterRouteChange: true
+    };
 
     ngOnInit() {
         this.id = this.route.snapshot.params['id'];
@@ -80,7 +85,7 @@ export class AddEditComponent implements OnInit {
             cost_price: [0],
             year: [''],
             remarks: [''],  
-            status: [Status.ENABLED, Validators.required]
+            book_status: [BooksStatus.AVAILABLE, Validators.required]
         });
 
         this.loadAuthors();
@@ -159,11 +164,12 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Book saved', true);
+                    
+                    this.alertService.success('Book saved', this.options );
                     this.router.navigateByUrl('/books');
                 },
                 error: (error: string) => {
-                    this.alertService.error(error);
+                    this.alertService.error(error), this.options;
                     this.submitting = false;
                 }
             })
