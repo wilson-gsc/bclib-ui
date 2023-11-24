@@ -37,7 +37,7 @@ import { AlertComponent } from '../alert/alert.component';
 export class MenubarComponent  {
   badgeVisible = false;
   openDrawer = false;
-  currentTime: Date;
+ // currentTime: Date;
 
 
   user?: User | null;
@@ -45,13 +45,13 @@ export class MenubarComponent  {
   constructor(private accountService: AccountService) {
     this.accountService.user.subscribe(x => this.user = x);
     if (this.user) { this.openDrawer = true; }
-    this.currentTime = new Date();
+   // this.currentTime = new Date();
     
   }
   ngOnInit(): void {
     // Update the current time every second
     setInterval(() => {
-      this.currentTime = new Date();
+    //  this.currentTime = new Date();
     }, 1000);
   }
 

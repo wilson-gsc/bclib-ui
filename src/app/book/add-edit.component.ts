@@ -191,11 +191,11 @@ export class AddEditComponent implements OnInit {
 
     private _listfilter(name: string): Author[] {
         const filterValue = name.toLowerCase();
-        return this.authors?.filter(option => option.name?.toLowerCase().includes(filterValue));
+        return this.authors?.filter(option => option.full_name?.toLowerCase().includes(filterValue));
     }
 
     displayFn(author: Author): string {
-        return author && author.name ? author.name : '';
+        return author && author.full_name ? author.full_name : '';
     }
 
     /** Categories */
@@ -245,7 +245,19 @@ export class AddEditComponent implements OnInit {
     displayFnAcc(accession: Accession): string {
         return accession && accession.name ? accession.name : '';
     }
-    
-
+    // restrick the charater
+    onKeypress(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if ((charCode < 48) || (charCode > 57)) {
+          event.preventDefault();
+        }
+      }
+      //restrick the number
+      onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
     
 }

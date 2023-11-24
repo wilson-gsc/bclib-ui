@@ -141,10 +141,18 @@ export class AddEditComponent implements OnInit {
 
     private _listfilterCur(name: string): Course[] {
         const filterValue = name.toLowerCase();
-        return this.courses?.filter(option => option.name?.toLowerCase().includes(filterValue));
+        return this.courses?.filter(option => option.course_name?.toLowerCase().includes(filterValue));
     }
 
     displayFnCur(course: Course): string {
-        return course && course.name ? course.name : '';
+        return course && course.course_name ? course.course_name : '';
     }
+
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
 }
