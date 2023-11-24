@@ -207,4 +207,12 @@ export class AddEditComponent implements OnInit {
     displayFnBook(book: Book): string {
         return book && book.title ? book.title : '';
     }
+
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
 }

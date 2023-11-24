@@ -53,7 +53,7 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             code: ['', Validators.required],
-            name: ['', Validators.required],
+            course_name: ['', Validators.required],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
@@ -63,7 +63,7 @@ export class AddEditComponent implements OnInit {
             // edit mode
             this.title = 'Edit Course';
             this.loading = true;
-            this.CourseService.getById(this.id)
+            this.CourseService.getById(this.id) 
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
@@ -107,4 +107,12 @@ export class AddEditComponent implements OnInit {
             ? this.CourseService.update(this.id!, this.form.value)
             : this.CourseService.create(this.form.value);
     }
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
+    
 }

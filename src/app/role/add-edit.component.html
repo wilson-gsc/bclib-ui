@@ -5,7 +5,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Role</mat-label>
-                <input type="text" formControlName="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }" matInput />
+                <input type="text" (keypress)="onKeypressnumber($event)"  formControlName="role" [ngClass]="{ 'is-invalid': submitted && f.role.errors }" matInput />
                 <mat-error *ngIf="submitted && f.role.errors">
                     <span *ngIf="f.role.errors.required">Role is required</span>
                 </mat-error>

@@ -5,7 +5,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>First Name</mat-label>
-                <input type="text" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" matInput />
+                <input type="text"  (keypress)="onKeypressnumber($event)" formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.first_name.errors">
                     <span *ngIf="f.first_name.errors.required">First Name is required</span>
                 </mat-error>
@@ -13,7 +13,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Last Name</mat-label>
-                <input type="text" formControlName="last_name" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" matInput />
+                <input type="text" (keypress)="onKeypressnumber($event)"  formControlName="last_name" [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.last_name.errors">
                     <span *ngIf="f.last_name.errors.required">Last Name is required</span>
                 </mat-error>
@@ -60,7 +60,7 @@
 
              <mat-form-field class="mat-50">
                 <mat-label>Role</mat-label>
-                <input type="text"
+                <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Role"
                         [ngClass]="{ 'is-invalid': submitted && f.role.errors }"

@@ -16,7 +16,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>First Name</mat-label>
-                <input type="text" formControlName="first_name"
+                <input type="text" (keypress)="onKeypressnumber($event)"  formControlName="first_name"
                     [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.first_name.errors">
                     <span *ngIf="f.first_name.errors.required">First Name is required</span>
@@ -25,7 +25,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Last Name</mat-label>
-                <input type="text" formControlName="last_name"
+                <input type="text" (keypress)="onKeypressnumber($event)"  formControlName="last_name"
                     [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.last_name.errors">
                     <span *ngIf="f.last_name.errors.required">Last Name is required</span>
@@ -43,7 +43,7 @@
             -->
             <mat-form-field class="mat-50">
                 <mat-label>Course</mat-label>
-                <input type="text"
+                <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Course"
                         [ngClass]="{ 'is-invalid': submitted && f.course.errors }"
@@ -53,7 +53,7 @@
                     >
                 <mat-autocomplete autoActiveFirstOption #autoPub="matAutocomplete" [displayWith]="displayFnCur">
                 <mat-option *ngFor="let option of filteredOptionsCur | async" [value]="option">
-                    {{option.name}}
+                    {{option.course_name}}
                 </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="submitted && f.course.errors">

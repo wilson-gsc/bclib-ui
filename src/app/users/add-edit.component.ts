@@ -141,4 +141,12 @@ export class AddEditComponent implements OnInit {
         return role && role.role ? role.role : '';
     }
 
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
+
 }
