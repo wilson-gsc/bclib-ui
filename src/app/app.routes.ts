@@ -16,7 +16,6 @@ const accessionRoutes = () => import('./accession/accession.routes').then(x => x
 const borrowersRecordRoutes = () => import('./borrowers_record/borrowers_record.routes').then(x => x.BORROW_RECORD_ROUTES);
 const RoleRoutes = () => import('./role/role.routes').then(x => x.ROLE_ROUTES);
 
-
 export const APP_ROUTES: Routes = [
     { path: '', component: HomeComponent, canActivate: [authGuard] },
     { path: 'users', loadChildren: usersRoutes, canActivate: [authGuard] },

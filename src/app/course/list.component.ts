@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
     course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = ['id','code', 'course_name', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'code', 'name', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
@@ -47,6 +47,7 @@ export class ListComponent implements OnInit {
             .pipe(first())
             .subscribe(course => {
                 this.course = course;
+                console.log(this.course);
                 this.dataSource = new MatTableDataSource<Course>(this.course);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;

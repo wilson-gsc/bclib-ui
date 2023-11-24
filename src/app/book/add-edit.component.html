@@ -93,7 +93,9 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Number</mat-label>
-                <input type="number" (keypress)="onKeypress($event)" formControlName="number" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" matInput />
+                <!-- <input type="number" formControlName="number" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" matInput /> -->
+                <input type="number" formControlName="number" [ngClass]="{ 'is-invalid': submitted && f.number.errors }" matInput 
+                    min="0" #input OnlyNumber="true">
                 <mat-error *ngIf="submitted && f.number.errors">
                     <span *ngIf="f.number.errors.required"> Number is required</span>
                 </mat-error>
