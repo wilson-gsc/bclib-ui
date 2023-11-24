@@ -12,10 +12,10 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Code</mat-label>
+                <mat-label>Color Code</mat-label>
                 <input type="text" formControlName="code" [ngClass]="{ 'is-invalid': submitted && f.code.errors }" matInput />
                 <mat-error *ngIf="submitted && f.code.errors">
-                    <span *ngIf="f.code.errors.required">Code is required</span>
+                    <span *ngIf="f.code.errors.required">Color Code is required</span>
                 </mat-error>
             </mat-form-field>
 

@@ -74,7 +74,7 @@ export class AddEditComponent implements OnInit {
             publisher: ['', Validators.required],
             accession: ['', Validators.required],
             description: [''],
-            number: [0],
+            number: ['0', Validators.required],
             author_number: [''],
             classification: [''],
             title: [''],

@@ -5,7 +5,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Name</mat-label>
-                <input type="text" (keypress)="onKeypressnumber($event)" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
+                <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
                 <mat-error *ngIf="submitted && f.name.errors">
                     <span *ngIf="f.name.errors.required">Name is required</span>
                 </mat-error>
