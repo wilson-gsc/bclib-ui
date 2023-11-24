@@ -5,7 +5,7 @@
 
             <mat-form-field class="mat-50 ">
                 <mat-label>Accession</mat-label>
-                <input type="text"
+                <input type="text"  (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Accession"
                         [ngClass]="{ 'is-invalid': submitted && f.accession.errors }"
@@ -25,7 +25,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Category</mat-label>
-                <input type="text"
+                <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Category"
                         [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
@@ -53,7 +53,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Author</mat-label>
-                <input type="text"
+                <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Author"
                         [ngClass]="{ 'is-invalid': submitted && f.author.errors }"
@@ -63,7 +63,7 @@
                     >
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option.name}}
+                    {{option.full_name}}
                 </mat-option>
                 </mat-autocomplete>
                 <mat-error *ngIf="submitted && f.author.errors">
@@ -73,7 +73,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Publisher</mat-label>
-                <input type="text"
+                <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Publisher"
                         [ngClass]="{ 'is-invalid': submitted && f.author.errors }"
@@ -160,7 +160,7 @@
 
             <mat-form-field class="mat-50">
                 <mat-label>Cost price</mat-label>
-                <input type="number" formControlName="cost_price" [ngClass]="{ 'is-invalid': submitted && f.cost_price.errors }" matInput />
+                <input type="number" (keypress)="onKeypress($event)"  formControlName="cost_price" [ngClass]="{ 'is-invalid': submitted && f.cost_price.errors }" matInput />
                 <mat-error *ngIf="submitted && f.cost_price.errors">
                     <span *ngIf="f.cost_price.errors.required">Cost price is required</span>
                 </mat-error>

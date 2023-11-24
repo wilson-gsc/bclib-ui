@@ -104,4 +104,11 @@ export class AddEditComponent implements OnInit {
             ? this.roleService.update(this.id!, this.form.value)
             : this.roleService.create(this.form.value);
     }
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
 }

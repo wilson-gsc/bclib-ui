@@ -4,10 +4,10 @@
         <mat-card-content>
 
             <mat-form-field class="mat-50">
-                <mat-label>Name</mat-label>
-                <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" matInput />
-                <mat-error *ngIf="submitted && f.name.errors">
-                    <span *ngIf="f.name.errors.required">Name is required</span>
+                <mat-label>Course Name</mat-label>
+                <input type="text" (keypress)="onKeypressnumber($event)"  formControlName="course_name" [ngClass]="{ 'is-invalid': submitted && f.course_name.errors }" matInput />
+                <mat-error *ngIf="submitted && f.course_name.errors">
+                    <span *ngIf="f.course_name.errors.required">Course Name is required</span>
                 </mat-error>
             </mat-form-field>
 
