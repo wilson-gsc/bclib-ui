@@ -51,6 +51,12 @@ export class ListComponent implements OnInit {
                 this.dataSource = new MatTableDataSource<Book>(this.books);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
+                this.dataSource.filterPredicate = (data: any, filter: string) => {
+                    console.log('data...', data.category)
+                    return data.author?.full_name?.toLocaleLowerCase().includes(filter) ||
+                    data.category?.name?.toLocaleLowerCase().includes(filter) ||
+                    data.publisher?.name?.toLocaleLowerCase().includes(filter);
+                }
             });
     }
 
