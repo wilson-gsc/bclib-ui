@@ -24,4 +24,5 @@ export class Book {
     publisher?: Publisher;
     accession?:Accession;
     number?:number;
+    quantity?:number;
 }
