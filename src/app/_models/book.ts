@@ -23,5 +23,5 @@ export class Book {
     remarks?: string;
     publisher?: Publisher;
     accession?:Accession;
-    number?:string;
+    number?:number;
 }

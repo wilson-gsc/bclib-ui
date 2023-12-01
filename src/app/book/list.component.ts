@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
     books?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'title', 'author', 'publisher', 'book_status', 'action'];
+    displayedColumns: string[] = ['number','accession', 'category', 'title', 'author', 'publisher','classification', 'book_status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
@@ -54,8 +54,10 @@ export class ListComponent implements OnInit {
                 this.dataSource.filterPredicate = (data: any, filter: string) => {
                     console.log('data...', data.category)
                     return data.author?.full_name?.toLocaleLowerCase().includes(filter) ||
-                    data.category?.name?.toLocaleLowerCase().includes(filter) ||
-                    data.publisher?.name?.toLocaleLowerCase().includes(filter);
+                    data.category?.name?.toLocaleLowerCase().includes(filter) ||//for feltering 
+                    data.publisher?.name?.toLocaleLowerCase().includes(filter)||
+                    data.book_status.toLocaleLowerCase().includes(filter)||
+                    data.accession?.name?.toLocaleLowerCase().includes(filter);
                 }
             });
     }

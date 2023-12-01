@@ -127,6 +127,14 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
+                <mat-label>Quantity</mat-label>
+                <input type="number" (keypress)="onKeypress($event)"  formControlName="quantity" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" matInput />
+                <mat-error *ngIf="submitted && f.quantity.errors">
+                    <span *ngIf="f.quantity.errors.required">quantity is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="mat-50">
                 <mat-label>Edition</mat-label>
                 <input type="text" formControlName="edition" [ngClass]="{ 'is-invalid': submitted && f.edition.errors }" matInput />
                 <mat-error *ngIf="submitted && f.edition.errors">

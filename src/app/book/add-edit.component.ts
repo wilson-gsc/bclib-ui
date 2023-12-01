@@ -11,7 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
 import { BookService, AuthorService, CategoryService, PublisherService, AccessionService} from '@app/_services';
-import { BooksStatus, Status } from '@app/_helpers/enums/status';
+import { BooksStatus, ReturnStatus, Status } from '@app/_helpers/enums/status';
 import { Observable } from 'rxjs';
 import { Accession, Author, Category, Publisher } from '@app/_models';
 import { AlertService } from '@app/_components/alert/alert.service';
@@ -74,7 +74,7 @@ export class AddEditComponent implements OnInit {
             publisher: ['', Validators.required],
             accession: ['', Validators.required],
             description: [''],
-            number: ['0', Validators.required],
+            number: [0],
             author_number: [''],
             classification: [''],
             title: [''],
@@ -83,6 +83,7 @@ export class AddEditComponent implements OnInit {
             pages: [''],
             source_of_fund: [''],
             cost_price: [0],
+            quantity: [1],
             year: [''],
             remarks: [''],  
             book_status: [BooksStatus.AVAILABLE, Validators.required]
