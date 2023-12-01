@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
     course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'code', 'name', 'status', 'action'];
+    displayedColumns: string[] = ['id', 'course_name', 'code',  'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

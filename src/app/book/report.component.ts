@@ -17,8 +17,8 @@ import { BookService } from '@app/_services/book.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'book-list-component',
-    templateUrl: 'list.component.html',
+    selector: 'book-report-component',
+    templateUrl: 'report.component.html',
     styleUrls: ['books.component.css'],
     standalone: true,
     imports: [
@@ -27,7 +27,7 @@ import { TableUtil } from '@app/_helpers/table.util';
         MatIconModule
     ]
 })
-export class ListComponent implements OnInit {
+export class ReportComponent implements OnInit {
 
     books?: Book[];
     dataSource: any;

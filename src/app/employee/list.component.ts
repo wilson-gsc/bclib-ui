@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
 
     employee?: Employee[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'employee_id', 'full_name', 'course', 'status', 'action'];
+    displayedColumns: string[] = [ 'employee_id', 'full_name', 'course', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
