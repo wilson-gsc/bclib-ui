@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
     books?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['number','accession', 'category', 'title', 'author', 'publisher','classification', 'book_status', 'action'];
+    displayedColumns: string[] = ['accession','number', 'category', 'title', 'author', 'publisher','classification', 'book_status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
