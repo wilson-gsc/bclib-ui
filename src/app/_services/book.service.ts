@@ -22,6 +22,10 @@ export class BookService {
         return this.http.get<Book[]>(`${environment.apiUrl}/books/enabled`);
     }
 
+    getAllGroupByName() {
+        return this.http.get<Book[]>(`${environment.apiUrl}/books/group-by-name`);
+    }
+
     create(book: Book) {
         return this.http.post(`${environment.apiUrl}/books`, book);
     }
