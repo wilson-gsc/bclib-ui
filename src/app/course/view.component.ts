@@ -9,14 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { first } from 'rxjs/operators';
 
-import { AccessionService } from '@app/_services';
+import { CourseService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { AlertService } from '@app/_components/alert/alert.service';
 
 
 @Component({ 
-    templateUrl: 'add-edit.component.html',
-    styleUrls: ['accession.component.css'],
+    templateUrl: 'view.component.html',
+    styleUrls: ['course.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
@@ -24,20 +24,22 @@ import { AlertService } from '@app/_components/alert/alert.service';
         MatSelectModule
     ]
 })
-export class AddEditComponent implements OnInit {
+export class ViewComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;
     loading = false;
     submitting = false;
     submitted = false;
+    currentDateTime: Date = new Date();
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private AccessionService: AccessionService,
-        private alertService: AlertService
+        private CourseService: CourseService,
+        private alertService: AlertService,
+        
     ) { }
     
     options = {
@@ -51,17 +53,17 @@ export class AddEditComponent implements OnInit {
         // form with validation rules
         this.form = this.formBuilder.group({
             code: ['', Validators.required],
-            name: ['', Validators.required],
+            course_name: ['', Validators.required],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
 
-        this.title = 'Add Accession';
+        this.title = 'View';
         if (this.id) {
             // edit mode
-            this.title = 'Edit Accession';
+            this.title = 'view Course';
             this.loading = true;
-            this.AccessionService.getById(this.id)
+            this.CourseService.getById(this.id) 
                 .pipe(first())
                 .subscribe(x => {
                     this.form.patchValue(x);
@@ -85,33 +87,32 @@ export class AddEditComponent implements OnInit {
         }
         
         this.submitting = true;
-        this.saveAccession()
+        this.saveCourse()
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Accession saved', this.options);
-                    this.router.navigateByUrl('/accessions');
+                    this.alertService.success('Course saved', this.options);
+                    this.router.navigateByUrl('/course');
                 },
                 error: (error: string) => {
                     this.alertService.error(error), this.options;                    
                     this.submitting = false;
                 }
-                
             })
     }
 
-    private saveAccession() {
-        // create or update Accession based on id param
+    private saveCourse() {
+        // create or update Course based on id param
         return this.id
-            ? this.AccessionService.update(this.id!, this.form.value)
-            : this.AccessionService.create(this.form.value);
+            ? this.CourseService.update(this.id!, this.form.value)
+            : this.CourseService.create(this.form.value);
     }
-
-      //restrick the number
-      onKeypressnumber(event: KeyboardEvent) {
+    //restrick the number
+    onKeypressnumber(event: KeyboardEvent) {
         const charCode = event.charCode;
         if (/[0-9]/.test(String.fromCharCode(charCode))) {
           event.preventDefault();
         }
       }
+    
 }

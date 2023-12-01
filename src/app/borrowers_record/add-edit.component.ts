@@ -74,7 +74,7 @@ export class AddEditComponent implements OnInit {
             date_returned: ['', Validators.required],
             remarks: [''],
             books_status: [BookStatus.CHECKEDOUT, Validators.required],
-            return_status: [ReturnStatus.GOOD, Validators.required],
+            return_status: [''],
         });
 
         this.loadStudents();
