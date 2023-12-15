@@ -4,4 +4,5 @@ export class Author {
     id?: string;
     full_name?: string;
     status?: Status;
+    number?: number;
 }

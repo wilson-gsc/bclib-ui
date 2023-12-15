@@ -6,4 +6,5 @@ export class Course {
     course_name?: string;
     status?: Status;
     currentTime?: String;
+   
 }

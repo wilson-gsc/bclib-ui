@@ -14,4 +14,5 @@ export class BorrowersRecord {
     remarks?: string;
     books_status?: BookStatus;
     return_status?:ReturnStatus;
+    fee?: number;
 }

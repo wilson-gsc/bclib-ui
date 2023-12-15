@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
 import { CourseService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { AlertService } from '@app/_components/alert/alert.service';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({ 
@@ -21,10 +22,10 @@ import { AlertService } from '@app/_components/alert/alert.service';
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule
+        MatSelectModule, MatTabsModule,
     ]
 })
-export class AddEditComponent implements OnInit {
+export class CourseAddEditComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;
@@ -32,6 +33,7 @@ export class AddEditComponent implements OnInit {
     submitting = false;
     submitted = false;
     currentDateTime: Date = new Date();
+    selectedStatus: string = 'good';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -70,6 +72,7 @@ export class AddEditComponent implements OnInit {
                     this.loading = false;
                 });
         }
+      
     }
 
     // convenience getter for easy access to form fields

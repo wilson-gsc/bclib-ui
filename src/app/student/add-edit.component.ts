@@ -30,7 +30,7 @@ import { AlertService } from '@app/_components/alert/alert.service';
         MatSelectModule, MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule
     ]
 })
-export class AddEditComponent implements OnInit {
+export class StudentAddEditComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;

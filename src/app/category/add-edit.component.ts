@@ -24,7 +24,7 @@ import { AlertService } from '@app/_components/alert/alert.service';
         MatSelectModule
     ]
 })
-export class AddEditComponent implements OnInit {
+export class CategoryAddEditComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;

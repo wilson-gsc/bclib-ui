@@ -52,6 +52,7 @@ export class AddEditComponent implements OnInit {
         this.form = this.formBuilder.group({
             full_name: ['', Validators.required],
             description: [''],
+            number: [''],
             status: [Status.ENABLED, Validators.required]
         });
 
@@ -108,6 +109,14 @@ export class AddEditComponent implements OnInit {
       onKeypressnumber(event: KeyboardEvent) {
         const charCode = event.charCode;
         if (/[0-9]/.test(String.fromCharCode(charCode))) {
+          event.preventDefault();
+        }
+      }
+
+       // restrick the charater
+    onKeypress(event: KeyboardEvent) {
+        const charCode = event.charCode;
+        if ((charCode < 48) || (charCode > 57)) {
           event.preventDefault();
         }
       }

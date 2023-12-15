@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -12,43 +12,49 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Employee } from '@app/_models';
-import { EmployeeService } from '@app/_services/employee.service';
+import { Book } from '@app/_models';
+import { BookService } from '@app/_services/book.service';
 import { TableUtil } from '@app/_helpers/table.util';
 
 @Component({ 
-    selector: 'employee-list-component',
-    templateUrl: 'list.component.html',
-    styleUrls: ['employee.component.css'],
+    selector: 'book-group-list-component',
+    templateUrl: 'list-group.component.html',
+    styleUrls: ['books.component.css'],
     standalone: true,
     imports: [
-        RouterLink, NgFor, NgIf,
+        RouterLink, NgFor, NgIf, CommonModule,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
         MatIconModule
-    ]
+    ],
+    providers: [DatePipe]
 })
-export class EmployeeComponent implements OnInit {
+export class ListGroupComponent implements OnInit {
 
-    employee?: Employee[];
+    books?: Book[];
     dataSource: any;
-    displayedColumns: string[] = [ 'employee_id', 'full_name', 'course', 'status', 'action'];
+    displayedColumns: string[] = ['title', 'quantity'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
-    
-    constructor(private employeeService: EmployeeService) {}
+
+    constructor(private bookService: BookService,
+        public datePipe: DatePipe) {}
 
     ngOnInit() {
-        this.getEmployee();
+        this.getBooks();
     }
 
-    getEmployee() {
-        this.employeeService.getAll()
+    getBooks() {
+        this.bookService.getAllGroupByName()
             .pipe(first())
-            .subscribe(employee => {
-                this.employee = employee;
-                this.dataSource = new MatTableDataSource<Employee>(this.employee);
+            .subscribe(books => {
+                console.log(books);
+                this.books = books;
+                this.dataSource = new MatTableDataSource<Book>(this.books);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
+                // this.dataSource.filterPredicate = (data: any, filter: string) => {
+                //     return data.author?.full_name?.toLocaleLowerCase().includes(filter);
+                // }
             });
     }
 
@@ -58,6 +64,6 @@ export class EmployeeComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("employees", "Employees");
+        TableUtil.exportTableToExcel("books", "Books");
     }
-}//
+}
