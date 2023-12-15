@@ -12,19 +12,20 @@ import { first } from 'rxjs/operators';
 import { CourseService } from '@app/_services';
 import { Status } from '@app/_helpers/enums/status';
 import { AlertService } from '@app/_components/alert/alert.service';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @Component({ 
-    templateUrl: 'view.component.html',
+    templateUrl: 'add-edit.component.html',
     styleUrls: ['course.component.css'],
     standalone: true,
     imports: [
         NgIf, ReactiveFormsModule, NgClass, RouterLink,
         MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule,
-        MatSelectModule
+        MatSelectModule, MatTabsModule,
     ]
 })
-export class ViewComponent implements OnInit {
+export class CourseViewComponent implements OnInit {
     form!: FormGroup;
     id?: string;
     title!: string;
@@ -32,6 +33,7 @@ export class ViewComponent implements OnInit {
     submitting = false;
     submitted = false;
     currentDateTime: Date = new Date();
+    selectedStatus: string = 'good';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -52,16 +54,16 @@ export class ViewComponent implements OnInit {
 
         // form with validation rules
         this.form = this.formBuilder.group({
-            code: ['', Validators.required],
-            course_name: ['', Validators.required],
+            code: [''],
+            course_name: [''],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });
 
-        this.title = 'View';
+        this.title = 'Add Course';
         if (this.id) {
             // edit mode
-            this.title = 'view Course';
+            this.title = 'Edit Course';
             this.loading = true;
             this.CourseService.getById(this.id) 
                 .pipe(first())

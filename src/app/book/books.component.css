@@ -35,3 +35,10 @@ mat-card {
 table {
     width: 100%;
 }
+
+.sticky-nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }

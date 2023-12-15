@@ -11,7 +11,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first, map, startWith } from 'rxjs/operators';
 
 import { BookService, AuthorService, CategoryService, PublisherService, AccessionService} from '@app/_services';
-import { BooksStatus, ReturnStatus, Status } from '@app/_helpers/enums/status';
+import { BooksStatus, ReturnStatus, SourceOfFund, Status } from '@app/_helpers/enums/status';
 import { Observable } from 'rxjs';
 import { Accession, Author, Category, Publisher } from '@app/_models';
 import { AlertService } from '@app/_components/alert/alert.service';
@@ -33,6 +33,7 @@ export class AddEditComponent implements OnInit {
     loading = false;
     submitting = false;
     submitted = false;
+    selectedStatus: string = 'School fund';
 
     authors!:Author[];
     filteredOptions!: Observable<Author[]>;
@@ -81,10 +82,10 @@ export class AddEditComponent implements OnInit {
             edition: [''],
             volumes: [''],
             pages: [''],
-            source_of_fund: [''],
+            source_of_fund:  [SourceOfFund.SCHOOLFUND, Validators.required],
             cost_price: [0],
             quantity: [1],
-            year: [''],
+            year: ['', Validators.required],
             remarks: [''],  
             book_status: [BooksStatus.AVAILABLE, Validators.required]
         });

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { MatCardModule } from '@angular/material/card';
@@ -15,6 +15,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { Course} from '@app/_models';
 import { CourseService } from '@app/_services/course.service';
 import { TableUtil } from '@app/_helpers/table.util';
+import { MatTabsModule } from '@angular/material/tabs';
+//import { AddEditComponent } from '@app/category/add-edit.component';
+import { CategoryListComponent } from '@app/category/list.component';
+
+
 
 @Component({ 
     selector: 'course-list-component',
@@ -24,15 +29,15 @@ import { TableUtil } from '@app/_helpers/table.util';
     imports: [
         RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
-        MatIconModule
+        MatIconModule, MatTabsModule, RouterOutlet, CategoryListComponent
     ]
 })
 
-export class ListComponent implements OnInit {
+export class CourseComponent implements OnInit {
 
     course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'course_name', 'code',  'status', 'action'];
+    displayedColumns: string[] = [ 'course_name', 'code','updated_at', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
@@ -52,6 +57,7 @@ export class ListComponent implements OnInit {
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
+            
     }
 
     filterChange(data: Event){

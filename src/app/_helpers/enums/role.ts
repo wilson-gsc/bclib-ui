@@ -1,6 +1,9 @@
 
 
-export enum BorrowerType {
-    Student = 'Student',
-    Employee = 'Employee'
+export enum UsersRole{
+    ADMIN = 'Admin',
+    LIBRARIAN = 'Librarian',
+    STUDENT = 'Student',
+    STAFF = 'Staff',
+    FACULTY= 'Faculty'
 }

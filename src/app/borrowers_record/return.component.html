@@ -19,7 +19,7 @@
                 <mat-label>Borrower Type</mat-label>
                 <mat-select matNativeControl required formControlName="borrower_type" matInput>
                   <mat-option value="Student">Student</mat-option>
-                  <mat-option value="Employee">Faculty</mat-option>
+                  <mat-option value="Employee">Employee</mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -44,7 +44,7 @@
             </mat-form-field>
 
             <mat-form-field class="mat-50">
-                <mat-label>Faculty</mat-label>
+                <mat-label>Employee</mat-label>
                 <input type="text" (keypress)="onKeypressnumber($event)"
                         placeholder="Select..."
                         aria-label="Employee"
@@ -276,7 +276,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <!--
+
             <mat-form-field class="mat-50">
                 <mat-label>Return Status</mat-label>
                 <select matNativeControl formControlName="return_status" matInput>
@@ -288,17 +288,6 @@
                     <span *ngIf="f.return_status.errors.required">Status is required</span>
                 </mat-error>
             </mat-form-field>
-                -->
-
-                <mat-form-field class="mat-50">
-                    <mat-label>Return Status</mat-label>
-                    <mat-select matNativeControl required formControlName="return_status" matInput>
-                      <mat-option  value="Good">Good</mat-option>
-                      <mat-option  value="Damaged">Damaged</mat-option>
-                      <mat-option value="Lost">Lost</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
 
             <mat-form-field class="mat-50">
                 <mat-label>Fee</mat-label>

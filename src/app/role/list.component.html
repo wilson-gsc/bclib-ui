@@ -10,13 +10,13 @@
     </mat-card-header>
     <mat-card-content>
         <section class="example-container mat-elevation-z8" tabindex="0">
-            <table id="accessions" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
+            <table id="role" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <!--
                 <ng-container matColumnDef="id">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef> ID </th>
                     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
                 </ng-container>
-
+                -->
                 <ng-container matColumnDef="role">
                     <th mat-sort-header mat-header-cell *matHeaderCellDef>Role </th>
                     <td mat-cell *matCellDef="let element"> {{element.role}} </td>

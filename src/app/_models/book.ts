@@ -8,7 +8,7 @@ export class Book {
     id?: string;
    // name?: string;
     description?: string;
-    Book_status?: BooksStatus;
+    book_status?: BooksStatus;
     author?: Author;
     category?: Category;
     author_number?: string;
