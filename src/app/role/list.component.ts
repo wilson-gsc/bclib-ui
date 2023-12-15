@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
 
     role?: Role[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'role', 'status', 'action'];
+    displayedColumns: string[] = [ 'role', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

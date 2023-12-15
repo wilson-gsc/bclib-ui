@@ -27,7 +27,7 @@ import { TableUtil } from '@app/_helpers/table.util';
         MatIconModule
     ]
 })
-export class ListComponent implements OnInit {
+export class EmployeeComponent implements OnInit {
 
     employee?: Employee[];
     dataSource: any;

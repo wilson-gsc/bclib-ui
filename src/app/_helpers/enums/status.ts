@@ -32,4 +32,9 @@ export enum YearLevel{
     FOURTHYEAR = 'Fourth Year',
     FIFTHYEAR = 'fifth year',
 }
+export enum SourceOfFund{
+    SCHOOLFUND = 'School Fund',
+    DONATE = 'Donate',
+    NONE = 'None'
+ }
 

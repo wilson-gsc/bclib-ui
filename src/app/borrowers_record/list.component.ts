@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
 
     borrowers_record?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['id','student', 'employee', 'book', 'date_borrowed', 'date_returned', 'action'];
+    displayedColumns: string[] = ['student', 'employee', 'book', 'date_borrowed', 'date_returned', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

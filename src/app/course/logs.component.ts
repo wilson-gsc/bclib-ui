@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { MatCardModule } from '@angular/material/card';
@@ -12,41 +12,48 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 
-import { Book } from '@app/_models';
-import { BookService } from '@app/_services/book.service';
+import { Course} from '@app/_models';
+import { CourseService } from '@app/_services/course.service';
 import { TableUtil } from '@app/_helpers/table.util';
+import { MatTabsModule } from '@angular/material/tabs';
+//import { AddEditComponent } from '@app/category/add-edit.component';
+import { CategoryListComponent } from '@app/category/list.component';
+
+
 
 @Component({ 
-    selector: 'book-report-component',
-    templateUrl: 'report.component.html',
-    styleUrls: ['books.component.css'],
+    selector: 'course-list-component',
+    templateUrl: 'list.component.html',
+    styleUrls: ['course.component.css'],
     standalone: true,
     imports: [
         RouterLink, NgFor, NgIf,
         MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSortModule,
-        MatIconModule
+        MatIconModule, MatTabsModule, RouterOutlet, CategoryListComponent
     ]
 })
-export class ReportComponent implements OnInit {
 
-    books?: Book[];
+export class LogsComponent implements OnInit {
+
+    course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = ['id', 'category', 'title', 'author', 'publisher', 'book_status', 'action'];
+    displayedColumns: string[] = [ 'course_name', 'code','updated_at', 'updated_by', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     
-    constructor(private bookService: BookService) {}
+    constructor(private courseService: CourseService) {}
 
     ngOnInit() {
-        this.getBooks();
+        this.getCourse();
     }
 
-    getBooks() {
-        this.bookService.getAll()
+    getCourse() {
+        this.courseService.getAll()
             .pipe(first())
-            .subscribe(books => {
-                this.books = books;
-                this.dataSource = new MatTableDataSource<Book>(this.books);
+            .subscribe(course => {
+                this.course = course;
+                console.log(this.course);
+                this.dataSource = new MatTableDataSource<Course>(this.course);
                 this.dataSource.paginator=this.paginator;
                 this.dataSource.sort=this.sort;
             });
@@ -58,6 +65,6 @@ export class ReportComponent implements OnInit {
     }
 
     exportTable() {
-        TableUtil.exportTableToExcel("books", "Books");
+        TableUtil.exportTableToExcel("course", "Course");
     }
 }

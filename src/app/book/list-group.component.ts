@@ -35,7 +35,7 @@ export class ListGroupComponent implements OnInit {
     displayedColumns: string[] = ['title', 'quantity'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
-    
+
     constructor(private bookService: BookService,
         public datePipe: DatePipe) {}
 
