@@ -31,7 +31,7 @@ import { AlertComponent } from '../alert/alert.component';
     MatSidenavModule,
     MatBadgeModule,
     AlertComponent,
-    NgIf, RouterLink, RouterLinkActive, DatePipe
+    NgIf, RouterLink, RouterLinkActive, DatePipe, MatMenuModule
   ]
 })
 export class MenubarComponent  {

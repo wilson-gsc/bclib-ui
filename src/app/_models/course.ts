@@ -6,5 +6,8 @@ export class Course {
     course_name?: string;
     status?: Status;
     currentTime?: String;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
    
 }

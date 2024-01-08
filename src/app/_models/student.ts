@@ -11,4 +11,7 @@ export class Student {
     year_level?: YearLevel;
     enrollment_date?:Date;
     status?: Status;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
 }

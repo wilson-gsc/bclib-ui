@@ -9,4 +9,8 @@ export class Employee {
     full_name?: string;
     course?: Course;
     status?: Status;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
+    
 }

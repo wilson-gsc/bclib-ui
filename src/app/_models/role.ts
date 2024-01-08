@@ -5,4 +5,5 @@ export class Role {
     role?: string;
     description?: string;
     status?: Status;
+    
 }

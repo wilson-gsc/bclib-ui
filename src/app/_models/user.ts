@@ -12,7 +12,11 @@ export class User {
         role?: Role;
         status?: Status;
         token?: string;
-        email?: string
+        email?: string;
+        created_at?: Date;
+        updated_at?: Date;
+        created_by?: Date;
+        
     }
     access_token?: string;
 }

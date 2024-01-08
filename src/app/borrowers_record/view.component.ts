@@ -9,13 +9,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first } from 'rxjs/operators';
 
-import { BookService, BorrowersRecordService, CourseService } from '@app/_services';
+import { BookService, BorrowersRecordService } from '@app/_services';
 import { AlertService } from '@app/_components/alert/alert.service';
-import { Book, BorrowersRecord, Course } from '@app/_models';
+import { Book, BorrowersRecord } from '@app/_models';
 
 @Component({ 
     templateUrl: 'view.component.html',
-    styleUrls: ['course.component.css'],
+    styleUrls: ['borrowersRecords.component.css'],
     standalone: true,
     imports: [
         NgIf, NgClass, CommonModule, RouterLink,
@@ -25,14 +25,14 @@ import { Book, BorrowersRecord, Course } from '@app/_models';
 })
 export class ViewComponent implements OnInit {
     id?: string;
-    course: Course | undefined;
-    title = 'View Course';
+    borrowersRecord: BorrowersRecord | undefined;
+    title = 'View Borrowers Record';
     loading = false;
     
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private courseService: CourseService
+        private borrowersRecordService: BorrowersRecordService
     ) { }
     
     ngOnInit() {
@@ -40,11 +40,11 @@ export class ViewComponent implements OnInit {
 
         if (this.id) {
             this.loading = true;
-            this.courseService.getById(this.id)
+            this.borrowersRecordService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
-                    this.course=x
-                    console.log(this.course)
+                    this.borrowersRecord=x
+                    console.log(this.borrowersRecord)
                 });
         }
         

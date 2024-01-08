@@ -37,7 +37,7 @@ export class BookComponent implements OnInit {
 
     books?: Book[];
     dataSource: any;
-    displayedColumns: string[] = ['accession','number', 'category', 'title', 'author', 'classification', 'book_status', 'action'];
+    displayedColumns: string[] = ['accession', 'category', 'title', 'author', 'classification', 'book_status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

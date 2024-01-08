@@ -5,4 +5,7 @@ export class Author {
     full_name?: string;
     status?: Status;
     number?: number;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
 }

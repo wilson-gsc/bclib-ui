@@ -25,4 +25,7 @@ export class Book {
     accession?:Accession;
     number?:number;
     quantity?:number;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
 }
