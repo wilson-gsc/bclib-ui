@@ -9,13 +9,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { first } from 'rxjs/operators';
 
-import { BookService, BorrowersRecordService, CourseService } from '@app/_services';
+import { BookService, BorrowersRecordService, EmployeeService } from '@app/_services';
 import { AlertService } from '@app/_components/alert/alert.service';
-import { Book, BorrowersRecord, Course } from '@app/_models';
+import { Book, BorrowersRecord, Employee } from '@app/_models';
 
 @Component({ 
     templateUrl: 'view.component.html',
-    styleUrls: ['course.component.css'],
+    styleUrls: ['employee.component.css'],
     standalone: true,
     imports: [
         NgIf, NgClass, CommonModule, RouterLink,
@@ -25,14 +25,14 @@ import { Book, BorrowersRecord, Course } from '@app/_models';
 })
 export class ViewComponent implements OnInit {
     id?: string;
-    course: Course | undefined;
-    title = 'View Course';
+    employee: Employee | undefined;
+    title = 'View Employee';
     loading = false;
     
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private courseService: CourseService
+        private employeeService: EmployeeService
     ) { }
     
     ngOnInit() {
@@ -40,11 +40,11 @@ export class ViewComponent implements OnInit {
 
         if (this.id) {
             this.loading = true;
-            this.courseService.getById(this.id)
+            this.employeeService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
-                    this.course=x
-                    console.log(this.course)
+                    this.employee=x
+                    console.log(this.employee)
                 });
         }
         

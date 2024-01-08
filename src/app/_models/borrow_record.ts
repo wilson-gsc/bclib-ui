@@ -15,4 +15,7 @@ export class BorrowersRecord {
     books_status?: BookStatus;
     return_status?:ReturnStatus;
     fee?: number;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
 }

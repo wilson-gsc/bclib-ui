@@ -63,7 +63,7 @@ export class AddEditComponent implements OnInit {
             first_name: ['', Validators.required],
             last_name: ['', Validators.required],
             full_name: [''],
-            course: ['', Validators.required],
+            // course: ['', Validators.required],
             description: [''],
             status: [Status.ENABLED, Validators.required]
         });

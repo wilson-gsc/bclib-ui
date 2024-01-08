@@ -37,7 +37,7 @@ export class CourseComponent implements OnInit {
 
     course?: Course[];
     dataSource: any;
-    displayedColumns: string[] = [ 'course_name', 'code','updated_at', 'status', 'action'];
+    displayedColumns: string[] = [ 'course_name', 'code', 'status', 'action'];
     @ViewChild(MatPaginator) paginator !:MatPaginator;
     @ViewChild(MatSort) sort !:MatSort;
     

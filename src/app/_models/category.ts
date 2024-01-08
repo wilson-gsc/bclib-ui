@@ -5,4 +5,7 @@ export class Category {
     code?: string;
     name?: string;
     status?: Status;
+    created_at?: Date;
+    updated_at?: Date;
+    created_by?: Date;
 }

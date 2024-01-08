@@ -10,7 +10,7 @@
                 <div class="position-relative row form-group bg-info ">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Accession</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.accession?.code}}
+                        {{author?.accession?.code}}
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Category</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.category?.code}}
+                        {{author?.category?.code}}
                     </div>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Accession</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.accession?.code}}
+                        {{author?.accession?.code}}
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Category</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.category?.code}}
+                        {{author?.category?.code}}
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Accession</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.accession?.code}}
+                        {{author?.accession?.code}}
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Category</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.category?.code}}
+                        {{author?.category?.code}}
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Accession</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.accession?.code}}
+                        {{author?.accession?.code}}
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                 <div class="position-relative row form-group">
                     <label class="col-sm-2 col-form-label" for="exampleEmail">Category</label>
                     <div class="col-sm-5 mt-1">
-                        {{course?.category?.code}}
+                        {{author?.category?.code}}
                     </div>
                 </div>
             </div>
@@ -74,54 +74,54 @@
     </mat-card-content>
     <mat-card-footer>
       <div style="margin: 2%; text-align: right">
-        <a routerLink="/courses" class="btn btn-link">Cancel</a>
+        <a routerLink="/authors" class="btn btn-link">Cancel</a>
       </div>
     </mat-card-footer>
 </mat-card>
  -->
- <div class="container pt-4">
+<div class="container pt-4">
     <div class="row g-2 rounded shadow">
         <h3 class="p-3">{{ title }}</h3>
       <div class="col-12">
-        <div class="p-3 ">Course Name: <span class="p-3">{{course?.course_name}}</span></div>
+        <div class="p-3 ">Full Name: <span class="p-3">{{author?.full_name}}</span></div>
       </div>
       <div class="col-12">
-        <div class="p-3 ">Code: <span class="p-3">{{course?.code}}</span></div>
+        <div class="p-3 ">Number: <span class="p-3">{{author?.number}}</span></div>
       </div>
       <div class="col-12">
-        <div class="p-3 ">status: <span class="p-3">{{course?.status}}</span></div>
+        <div class="p-3 ">status: <span class="p-3">{{author?.status}}</span></div>
        </div>
        <div class="col-12">
-        <div class="p-3 ">Created_at: <span class="p-3">{{course?.created_at | date: 'MM/dd/yyyy'}}</span></div>
+        <div class="p-3 ">Created_at: <span class="p-3">{{author?.created_at | date: 'MM/dd/yyyy'}}</span></div>
       </div>
       <div class="col-12">
-        <div class="p-3 ">Updated At: <span class="p-3">{{course?.updated_at | date: 'MM/dd/yyyy'}}</span></div>
+        <div class="p-3 ">Updated At: <span class="p-3">{{author?.updated_at | date: 'MM/dd/yyyy'}}</span></div>
       </div>
        <!--
       <div class="col-6">
-        <div class="p-3 ">Source of Fund: <span class="p-3">{{course?.source_of_fund}}</span></div>
+        <div class="p-3 ">Source of Fund: <span class="p-3">{{author?.source_of_fund}}</span></div>
       </div>
       <div class="col-6">
-        <div class="p-3 ">Price: <span class="p-3">{{course?.cost_price}}</span></div>
+        <div class="p-3 ">Price: <span class="p-3">{{author?.cost_price}}</span></div>
       </div>
       <div class="col-6">
-        <div class="p-3 ">Year: <span class="p-3">{{course?.year}}</span></div>
+        <div class="p-3 ">Year: <span class="p-3">{{author?.year}}</span></div>
       </div>
       <div class="col-6">
-        <div class="p-3 ">remarks: <span class="p-3">{{course?.remarks}}</span></div>
+        <div class="p-3 ">remarks: <span class="p-3">{{author?.remarks}}</span></div>
       </div> -->
       <!-- <div class="col-6">
-        <div class="p-3 ">Created_at: <span class="p-3">{{course?.created_at | date: 'MM/dd/yyyy'}}</span></div>
+        <div class="p-3 ">Created_at: <span class="p-3">{{author?.created_at | date: 'MM/dd/yyyy'}}</span></div>
       </div>
       <div class="col-6">
-        <div class="p-3 ">Updated At: <span class="p-3">{{course?.updated_at | date: 'MM/dd/yyyy'}}</span></div>
+        <div class="p-3 ">Updated At: <span class="p-3">{{author?.updated_at | date: 'MM/dd/yyyy'}}</span></div>
       </div>
       <div class="col-6">
-        <div class="p-3 ">created_by: <span class="p-3">{{course?.created_by | date: 'MM/dd/yyyy'}}</span></div> 
+        <div class="p-3 ">created_by: <span class="p-3">{{author?.created_by | date: 'MM/dd/yyyy'}}</span></div> 
       </div>-->
       <mat-card-footer>
         <div style="margin: 2%; text-align: right">
-          <a routerLink="/course" class="btn btn-link">Cancel</a>
+          <a routerLink="/authors" class="btn btn-link">Cancel</a>
         </div>
       </mat-card-footer>
     </div>
